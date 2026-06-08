@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Report Officials</title>
+</head>
+<body>
+
+  <p><a href="homepage.html">&#8592; Go Back</a></p>
+
+  <h2>REPORT OFFICIALS</h2>
+  <p>Select the official you want to report and fill out the details below.</p>
+  <hr>
+
+  <form action="homepage.html" method="get">
+
+    <!-- Barangay Officials dropdown -->
+    <p>
+      <label for="barangay_official"><b>BARANGAY OFFICIALS:</b></label><br>
+      <select id="barangay_official" name="barangay_official">
+        <option value="">-- Select Barangay Official --</option>
+        <option value="punong_barangay">Punong Barangay - Juan dela Cruz</option>
+        <option value="kagawad_1">Kagawad - Juan dela Cruz</option>
+        <option value="kagawad_2">Kagawad - Juan dela Cruz</option>
+        <option value="kagawad_3">Kagawad - Juan dela Cruz</option>
+        <option value="kagawad_4">Kagawad - Juan dela Cruz</option>
+        <option value="kagawad_5">Kagawad - Juan dela Cruz</option>
+        <option value="kagawad_6">Kagawad - Juan dela Cruz</option>
+        <option value="kagawad_7">Kagawad - Juan dela Cruz</option>
+        <option value="secretary">Barangay Secretary - Juan dela Cruz</option>
+        <option value="treasurer">Barangay Treasurer - Juan dela Cruz</option>
+      </select>
+    </p>
+
+    <!-- SK Kagawads dropdown -->
+    <p>
+      <label for="sk_official"><b>SK KAGAWADS:</b></label><br>
+      <select id="sk_official" name="sk_official">
+        <option value="">-- Select SK Official --</option>
+        <option value="sk_chairman">SK Chairman - Juan dela Cruz</option>
+        <option value="sk_kagawad_1">SK Kagawad - Juan dela Cruz</option>
+        <option value="sk_kagawad_2">SK Kagawad - Juan dela Cruz</option>
+        <option value="sk_kagawad_3">SK Kagawad - Juan dela Cruz</option>
+        <option value="sk_kagawad_4">SK Kagawad - Juan dela Cruz</option>
+        <option value="sk_kagawad_5">SK Kagawad - Juan dela Cruz</option>
+        <option value="sk_kagawad_6">SK Kagawad - Juan dela Cruz</option>
+        <option value="sk_secretary">SK Secretary - Juan dela Cruz</option>
+        <option value="sk_treasurer">SK Treasurer - Juan dela Cruz</option>
+      </select>
+    </p>
+
+    <!-- Tanods dropdown -->
+    <p>
+      <label for="tanod"><b>TANODS:</b></label><br>
+      <select id="tanod" name="tanod">
+        <option value="">-- Select Tanod --</option>
+        <option value="tanod_chief">Tanod Chief - Juan dela Cruz</option>
+        <option value="tanod_1">Tanod - Juan dela Cruz</option>
+        <option value="tanod_2">Tanod - Juan dela Cruz</option>
+        <option value="tanod_3">Tanod - Juan dela Cruz</option>
+        <option value="tanod_4">Tanod - Juan dela Cruz</option>
+        <option value="tanod_5">Tanod - Juan dela Cruz</option>
+        <option value="tanod_6">Tanod - Juan dela Cruz</option>
+        <option value="tanod_7">Tanod - Juan dela Cruz</option>
+      </select>
+    </p>
+
+    <!-- Nature of complaint -->
+    <p>
+      <label for="complaint_type"><b>NATURE OF COMPLAINT:</b></label><br>
+      <select id="complaint_type" name="complaint_type">
+        <option value="">-- Select --</option>
+        <option value="misconduct">Misconduct</option>
+        <option value="corruption">Corruption</option>
+        <option value="negligence">Negligence of Duty</option>
+        <option value="abuse">Abuse of Authority</option>
+        <option value="harassment">Harassment</option>
+        <option value="other">Other</option>
+      </select>
+    </p>
+
+    <!-- Description -->
+    <p>
+      <label for="description"><b>DESCRIPTION OF COMPLAINT:</b></label><br>
+      <textarea id="description" name="description" rows="6" cols="50" placeholder="Describe the incident in detail..."></textarea>
+    </p>
+
+    <!-- Date of incident -->
+    <p>
+      <label for="incident_date"><b>DATE OF INCIDENT:</b></label><br>
+      <input type="date" id="incident_date" name="incident_date">
+    </p>
+
+    <!-- Optional evidence upload -->
+    <p>
+      <label for="evidence"><b>ATTACH EVIDENCE (optional):</b></label><br>
+      <input type="file" id="evidence" name="evidence" accept="image/*,.pdf">
+    </p>
+
+    <!-- Confidentiality note -->
+    <p>
+      <small><b>Note:</b> This report is confidential and will be handled with discretion.</small>
+    </p>
+
+    <hr>
+
+    <p>
+      <input type="submit" value="Submit Report">
+      &nbsp;
+      <a href="homepage.html"><button type="button">Cancel</button></a>
+    </p>
+
+  </form>
+
+</body>
+</html>

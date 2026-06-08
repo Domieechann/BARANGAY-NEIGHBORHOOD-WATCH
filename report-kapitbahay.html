@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Report Kapitbahay</title>
+</head>
+<body>
+
+  <p><a href="homepage.html">&#8592; Go Back</a></p>
+
+  <h2>REPORT KAPITBAHAY</h2>
+  <p>Fill out the form below to submit a report about your neighbor.</p>
+  <hr>
+
+  <form action="homepage.html" method="get">
+
+    <!-- Type of issue radio buttons -->
+    <p>
+      <label><b>TYPE OF ISSUE:</b></label><br><br>
+
+      <!-- Normal - minor, non-urgent concern -->
+      <input type="radio" id="normal" name="issue_level" value="normal">
+      <label for="normal">Normal</label> - minor, non-urgent concern<br><br>
+
+      <!-- Medium - needs attention soon -->
+      <input type="radio" id="medium" name="issue_level" value="medium">
+      <label for="medium">Medium</label> - needs attention soon<br><br>
+
+      <!-- Critical - urgent, requires immediate action -->
+      <input type="radio" id="critical" name="issue_level" value="critical">
+      <label for="critical">Critical</label> - urgent, requires immediate action
+    </p>
+
+    <!-- Name of the person being reported -->
+    <p>
+      <label for="reported_name"><b>NAME OF REPORTED INDIVIDUAL:</b></label><br>
+      <input type="text" id="reported_name" name="reported_name" size="50" placeholder="Enter full name of the person">
+    </p>
+
+    <!-- Exact address of the person being reported -->
+    <p>
+      <label for="address"><b>ADDRESS OF THE REPORTED INDIVIDUAL:</b></label><br>
+      <input type="text" id="address" name="address" size="50" placeholder="e.g. Blk 5 Lot 3, Sampaguita St., Barangay...">
+    </p>    
+
+    <!-- Description of the issue -->
+    <p>
+      <label for="description"><b>DESCRIBE THE ISSUE:</b></label><br>
+      <textarea id="description" name="description" rows="6" cols="50" placeholder="Ilarawan ang isyu nang detalyado..."></textarea>
+    </p>
+
+    <!-- Optional photo evidence -->
+    <p>
+      <label for="photo"><b>ATTACH PHOTO (optional):</b></label><br>
+      <input type="file" id="photo" name="photo" accept="image/*">
+    </p>
+
+    <p>
+      <small><b>Note:</b> This report is confidential and will be handled with discretion.</small>
+    </p>
+
+    <hr>
+
+    <p>
+      <input type="submit" value="Submit Report">
+      &nbsp;
+      <a href="homepage.html"><button type="button">Cancel</button></a>
+    </p>
+
+  </form>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Update Personal Info</title>
+</head>
+<body>
+
+  <h2>UPDATE PERSONAL INFO</h2>
+  <p>Fill in the fields you want to update, then click Submit.</p>
+  <hr>
+
+  <form action="homepage.html" method="get">
+
+    <!-- Full name -->
+    <p>
+      <label for="name">FULL NAME:</label><br>
+      <input type="text" id="name" name="name" placeholder="Enter your full name">
+    </p>
+
+    <!-- Date of birth -->
+    <p>
+      <label for="dob">DATE OF BIRTH:</label><br>
+      <input type="date" id="dob" name="dob">
+    </p>
+
+    <!-- Age -->
+    <p>
+      <label for="age">AGE:</label><br>
+      <input type="number" id="age" name="age" min="1" max="120" placeholder="Enter your age">
+    </p>
+
+    <!-- Gender -->
+    <p>
+      <label for="gender">GENDER:</label><br>
+      <select id="gender" name="gender">
+        <option value="">Select</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+        <option value="prefer_not">Prefer not to say</option>
+      </select>
+    </p>
+
+    <!-- Civil status -->
+    <p>
+      <label for="civil_status">CIVIL STATUS:</label><br>
+      <select id="civil_status" name="civil_status">
+        <option value="">Select</option>
+        <option value="single">Single</option>
+        <option value="married">Married</option>
+        <option value="widowed">Widowed</option>
+        <option value="separated">Separated</option>
+      </select>
+    </p>
+
+    <!-- Address -->
+    <p>
+      <label for="address">HOME ADDRESS:</label><br>
+      <input type="text" id="address" name="address" placeholder="House No., Street, Barangay">
+    </p>
+
+    <!-- Phone number -->
+    <p>
+      <label for="phone">PHONE NUMBER:</label><br>
+      <input type="tel" id="phone" name="phone" placeholder="e.g. 09XXXXXXXXX">
+    </p>
+
+    <!-- Email -->
+    <p>
+      <label for="email">EMAIL ADDRESS:</label><br>
+      <input type="email" id="email" name="email" placeholder="Enter your email">
+    </p>
+
+    <!-- Occupation -->
+    <p>
+      <label for="occupation">OCCUPATION:</label><br>
+      <input type="text" id="occupation" name="occupation" placeholder="Enter your occupation">
+    </p>
+
+    <!-- Upload new ID for verification -->
+    <p>
+      <label for="id_file">UPLOAD VALID ID (for verification):</label><br>
+      <input type="file" id="id_file" name="id_file" accept="image/*,.pdf">
+    </p>
+
+    <hr>
+
+    <!-- Go back arrow -->
+    <p>
+      <a href="homepage.html">&#8592; Go Back</a>
+    </p>
+
+    <!-- Submit and Cancel buttons -->
+    <p>
+      <input type="submit" value="Save Changes">
+      &nbsp;
+      <!-- Cancel returns to homepage without saving -->
+      <a href="homepage.html"><button type="button">Cancel</button></a>
+    </p>
+
+  </form>
+
+</body>
+</html>

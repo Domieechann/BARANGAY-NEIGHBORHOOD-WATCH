@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Report a Barangay Issue</title>
+</head>
+<body>
+
+  <p><a href="homepage.html">&#8592; Go Back</a></p>
+    
+  <h2>REPORT AN ISSUE ABOUT THE BARANGAY</h2>
+  <p>Fill out the form below to submit a barangay issue report.</p>
+  <hr>
+
+  <form action="homepage.html" method="get">
+
+    <!-- Type of issue -->
+    <p>
+      <label><b>TYPE OF ISSUE:</b></label><br><br>
+
+      <!-- Normal - minor, non-urgent concern -->
+      <input type="radio" id="normal" name="issue_level" value="normal">
+      <label for="normal">Normal</label> - minor, non-urgent concern<br><br>
+
+      <!-- Medium - needs attention soon -->
+      <input type="radio" id="medium" name="issue_level" value="medium">
+      <label for="medium">Medium</label> - needs attention soon<br><br>
+
+      <!-- Critical - urgent, requires immediate action -->
+      <input type="radio" id="critical" name="issue_level" value="critical">
+      <label for="critical">Critical</label> - urgent, requires immediate action
+    </p>
+
+    <!-- Description box -->
+    <p>
+      <label for="description"><b>DESCRIPTION:</b></label><br>
+      <textarea id="description" name="description" rows="6" cols="50" placeholder="Describe the issue in detail..."></textarea>
+    </p>
+
+    <!-- Location of the issue -->
+    <p>
+      <label for="location"><b>LOCATION OF ISSUE:</b></label><br>
+      <input type="text" id="location" name="location" placeholder="e.g. Near the barangay hall, Rizal St.">
+    </p>
+
+    <!-- Optional photo upload -->
+    <p>
+      <label for="photo"><b>ATTACH PHOTO (optional):</b></label><br>
+      <input type="file" id="photo" name="photo" accept="image/*">
+    </p>
+
+    <hr>
+
+    <p>
+      <input type="submit" value="Submit Report">
+      &nbsp;
+      <a href="homepage.html"><button type="button">Cancel</button></a>
+    </p>
+
+  </form>
+
+</body>
+</html>
