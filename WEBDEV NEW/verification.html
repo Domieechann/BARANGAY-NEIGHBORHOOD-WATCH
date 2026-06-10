@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Bantay Barangay | Resident Verification</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #eef2f7 0%, #d9e2ec 100%);
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+    }
+
+    /* main portal card container - consistent with all pages */
+    .portal-container {
+      max-width: 780px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 2rem;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    /* header with barangay identity - same color scheme #0b3b2f and gold accent */
+    .portal-header {
+      background: #0b3b2f;
+      background-image: radial-gradient(circle at 10% 30%, rgba(60, 130, 110, 0.2) 2%, transparent 2.5%),
+                        radial-gradient(circle at 85% 70%, rgba(200, 230, 210, 0.1) 1.8%, transparent 2%);
+      background-size: 40px 40px, 32px 32px;
+      padding: 1.8rem 2rem;
+      border-bottom: 6px solid #f4b942;
+      text-align: center;
+    }
+
+    .portal-header h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: white;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .portal-header h2:before {
+      content: "✓";
+      background: #f4b942;
+      color: #0b3b2f;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .header-sub {
+      font-size: 0.95rem;
+      color: #f9f3e2;
+      background: rgba(0, 0, 0, 0.2);
+      display: inline-block;
+      padding: 0.3rem 1.2rem;
+      border-radius: 40px;
+      margin-top: 0.75rem;
+      font-weight: 500;
+    }
+
+    .elegant-divider {
+      height: 4px;
+      background: linear-gradient(90deg, #f4b942, #d9a13b, #f4b942);
+      width: 100%;
+    }
+
+    /* form container */
+    .form-container {
+      padding: 2rem 2rem 2rem 2rem;
+    }
+
+    .verify-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .form-label {
+      font-weight: 700;
+      color: #1a2e28;
+      font-size: 0.9rem;
+      letter-spacing: -0.2px;
+    }
+
+    /* input fields */
+    input[type="text"], 
+    input[type="tel"],
+    input[type="number"],
+    select,
+    input[type="file"] {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid #e2e8e6;
+      border-radius: 1rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      background: #fefef7;
+      color: #1e2f29;
+    }
+
+    input:focus, 
+    select:focus {
+      outline: none;
+      border-color: #f4b942;
+      box-shadow: 0 0 0 3px rgba(244, 185, 66, 0.2);
+      background: #ffffff;
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23476b5f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1rem;
+    }
+
+    input[type="file"] {
+      padding: 0.7rem 0.8rem;
+      background: #fefef7;
+      border: 1.5px dashed #cbdcd5;
+      cursor: pointer;
+    }
+
+    input[type="file"]:hover {
+      border-color: #f4b942;
+      background: #fffcf5;
+    }
+
+    .helper-text {
+      font-size: 0.7rem;
+      color: #8da396;
+      margin-top: 0.25rem;
+    }
+
+    /* verification badge */
+    .verification-note {
+      background: #eef4f1;
+      border-radius: 1rem;
+      padding: 0.9rem 1.2rem;
+      margin: 0.5rem 0 0.25rem;
+      border-left: 4px solid #f4b942;
+    }
+
+    .verification-note p {
+      font-size: 0.8rem;
+      color: #2c5a4a;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* submit button */
+    .form-actions {
+      margin-top: 0.5rem;
+    }
+
+    .btn-submit {
+      background: #0b3b2f;
+      color: white;
+      border: none;
+      padding: 0.9rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 3rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-family: inherit;
+      width: 100%;
+    }
+
+    .btn-submit:hover {
+      background: #1f5e4b;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(11, 59, 47, 0.25);
+    }
+
+    .btn-submit:active {
+      transform: translateY(1px);
+    }
+
+    /* footer same as main portal */
+    .portal-footer {
+      background: #f8fafc;
+      padding: 1.2rem 2rem;
+      text-align: center;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.8rem;
+      color: #5b6e66;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: #eef2e7;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-weight: 500;
+      font-size: 0.7rem;
+      color: #2c5a4a;
+    }
+
+    .emergency-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    hr {
+      display: none;
+    }
+
+    /* mobile optimization */
+    @media (max-width: 640px) {
+      body {
+        padding: 1rem;
+      }
+      .form-container {
+        padding: 1.5rem;
+      }
+      .portal-header h2 {
+        font-size: 1.5rem;
+      }
+      .portal-header h2:before {
+        width: 32px;
+        height: 32px;
+        font-size: 1.2rem;
+      }
+      .portal-footer {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* subtle animation */
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .portal-container {
+      animation: fadeSlideUp 0.4s ease-out;
+    }
+
+    /* focus accessibility */
+    input:focus-visible, 
+    select:focus-visible,
+    button:focus-visible {
+      outline: 3px solid #f4b942;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="portal-container">
+  <div class="portal-header">
+    <h2>VERIFICATION</h2>
+    <div class="header-sub">Verify your identity to access barangay services</div>
+  </div>
+  <div class="elegant-divider"></div>
+
+  <div class="form-container">
+    <form action="homepage.html" method="get" class="verify-form">
+
+      <!-- NAME -->
+      <div class="form-group">
+        <div class="form-label">
+          NAME:
+        </div>
+        <input type="text" id="name" name="name" placeholder="Enter your complete name (Last, First Middle)">
+        <div class="helper-text">As shown in your valid government ID.</div>
+      </div>
+
+      <!-- ADDRESS -->
+      <div class="form-group">
+        <div class="form-label">
+          ADDRESS:
+        </div>
+        <input type="text" id="address" name="address" placeholder="House No., Street, Barangay">
+        <div class="helper-text">Your registered address within the barangay.</div>
+      </div>
+
+      <!-- PHONE NUMBER -->
+      <div class="form-group">
+        <div class="form-label">
+          PHONE NUMBER:
+        </div>
+        <input type="tel" id="phone" name="phone" placeholder="e.g., 09123456789">
+        <div class="helper-text">Active contact number for verification purposes.</div>
+      </div>
+
+      <!-- AGE -->
+      <div class="form-group">
+        <div class="form-label">
+          AGE:
+        </div>
+        <input type="number" id="age" name="age" min="1" max="120" placeholder="Enter your age">
+        <div class="helper-text">Must be 18 years or older for certain services.</div>
+      </div>
+
+      <!-- GENDER dropdown -->
+      <div class="form-group">
+        <div class="form-label">
+          GENDER:
+        </div>
+        <select id="gender" name="gender">
+          <option value="">Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+          <option value="prefer_not">Prefer not to say</option>
+        </select>
+      </div>
+
+      <!-- Upload valid ID -->
+      <div class="form-group">
+        <div class="form-label">
+          VERIFY USING ID WITH ADDRESS:
+        </div>
+        <input type="file" id="id_file" name="id_file" accept="image/*,.pdf">
+        <div class="helper-text">Accepted: Passport, Driver's License, National ID, Postal ID, or any government-issued ID showing your address.</div>
+      </div>
+
+      <!-- Verification note -->
+      <div class="verification-note">
+        <p>
+          🔒 Your information and uploaded ID will be kept confidential and used solely for barangay record verification.
+        </p>
+      </div>
+
+      <!-- Submit button -->
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">Submit Verification</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="portal-footer">
+    <div class="emergency-note">
+      <span>📞 Barangay Hotline: (02) 1234 5678</span>
+    </div>
+    <div class="badge">Secure · Data Privacy Compliant</div>
+    <div>Serbisyong Tapat, Barangay Sambayan</div>
+  </div>
+</div>
+
+</body>
+</html>
