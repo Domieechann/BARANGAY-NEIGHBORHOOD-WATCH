@@ -3,69 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Report Kapitbahay</title>
+  <title>Report Kapitbahay / Report Neighbor</title>
 </head>
 <body>
 
-  <p><a href="homepage.html">&#8592; Go Back</a></p>
+  <!-- Go Back Link -->
+  <p><a href="homepage.html">&#8592; Go Back / Bumalik</a></p>
 
-  <h2>REPORT KAPITBAHAY</h2>
-  <p>Fill out the form below to submit a report about your neighbor.</p>
+  <!-- Header -->
+  <h2>REPORT KAPITBAHAY (REPORT NEIGHBOR)</h2>
+  <p>Fill out the form below to submit a report about your neighbor. <br>
+     <small><i>(Punan ang form sa ibaba upang magpadala ng ulat tungkol sa iyong kapitbahay.)</i></small></p>
   <hr>
 
-  <form action="homepage.html" method="get">
+  <form action="submit_report.php" method="post" enctype="multipart/form-data">
 
-    <!-- Type of issue radio buttons -->
+    <!-- Type of Issue -->
     <p>
-      <label><b>TYPE OF ISSUE:</b></label><br><br>
+      <label><b>TYPE OF ISSUE / URI NG ISYU:</b></label><br><br>
 
-      <!-- Normal - minor, non-urgent concern -->
       <input type="radio" id="normal" name="issue_level" value="normal">
-      <label for="normal">Normal</label> - minor, non-urgent concern<br><br>
+      <label for="normal"><b>Normal</b> - minor, non-urgent concern <i>(maliit na problema, hindi apurahan)</i></label><br><br>
 
-      <!-- Medium - needs attention soon -->
       <input type="radio" id="medium" name="issue_level" value="medium">
-      <label for="medium">Medium</label> - needs attention soon<br><br>
+      <label for="medium"><b>Medium</b> - needs attention soon <i>(nangangailangan ng pansin sa lalong madaling panahon)</i></label><br><br>
 
-      <!-- Critical - urgent, requires immediate action -->
       <input type="radio" id="critical" name="issue_level" value="critical">
-      <label for="critical">Critical</label> - urgent, requires immediate action
+      <label for="critical"><b>Critical</b> - urgent, requires immediate action <i>(kritikal, nangangailangan ng agarang aksyon)</i></label>
     </p>
 
-    <!-- Name of the person being reported -->
+    <!-- Name of Reported Individual -->
     <p>
-      <label for="reported_name"><b>NAME OF REPORTED INDIVIDUAL:</b></label><br>
-      <input type="text" id="reported_name" name="reported_name" size="50" placeholder="Enter full name of the person">
+      <label for="reported_name"><b>NAME OF REPORTED INDIVIDUAL / PANGALAN NG ISINUMBONG:</b></label><br>
+      <input type="text" id="reported_name" name="reported_name" size="50" placeholder="Enter full name / Ipasok ang buong pangalan" required>
     </p>
 
-    <!-- Exact address of the person being reported -->
+    <!-- Address -->
     <p>
-      <label for="address"><b>ADDRESS OF THE REPORTED INDIVIDUAL:</b></label><br>
-      <input type="text" id="address" name="address" size="50" placeholder="e.g. Blk 5 Lot 3, Sampaguita St., Barangay...">
+      <label for="address"><b>ADDRESS OF THE REPORTED INDIVIDUAL / TIRAHAN NG ISINUMBONG:</b></label><br>
+      <input type="text" id="address" name="address" size="50" placeholder="e.g. Blk 5 Lot 3, Sampaguita St., Barangay..." required>
     </p>    
 
-    <!-- Description of the issue -->
+    <!-- Description -->
     <p>
-      <label for="description"><b>DESCRIBE THE ISSUE:</b></label><br>
-      <textarea id="description" name="description" rows="6" cols="50" placeholder="Ilarawan ang isyu nang detalyado..."></textarea>
+      <label for="description"><b>DESCRIBE THE ISSUE / ILARAWAN ANG ISYU:</b></label><br>
+      <textarea id="description" name="description" rows="6" cols="50" placeholder="Ilarawan ang isyu nang detalyado... / Describe the issue in detail..." required></textarea>
     </p>
 
-    <!-- Optional photo evidence -->
+    <!-- Photo Evidence -->
     <p>
-      <label for="photo"><b>ATTACH PHOTO (optional):</b></label><br>
+      <label for="photo"><b>ATTACH PHOTO / MAG-ATTACH NG LARAWAN (optional/opsyonal):</b></label><br>
       <input type="file" id="photo" name="photo" accept="image/*">
     </p>
 
+    <!-- Confidentiality Note -->
     <p>
-      <small><b>Note:</b> This report is confidential and will be handled with discretion.</small>
+      <small><b>Note / Paunawa:</b> This report is confidential and will be handled with discretion. <i>(Ang ulat na ito ay kumpidensyal at hahawakan nang may pag-iingat.)</i></small>
     </p>
 
     <hr>
 
+    <!-- Buttons -->
     <p>
-      <input type="submit" value="Submit Report">
+      <input type="submit" value="Submit Report / Isumite ang Ulat">
       &nbsp;
-      <a href="homepage.html"><button type="button">Cancel</button></a>
+      <a href="homepage.html"><button type="button">Cancel / Kanselahin</button></a>
     </p>
 
   </form>
