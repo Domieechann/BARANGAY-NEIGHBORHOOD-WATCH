@@ -9,48 +9,48 @@
 <body>
 
   <div id="back-link-wrapper">
-    <a id="back-link" href="homepage.html">&#8592; Go Back</a>
+    <a id="back-link" href="homepage.html">&#8592; Go Back / Bumalik</a>
   </div>
 
   <form id="report-form" action="homepage.html" method="get">
 
-    <h2 id="page-title">Report a Barangay Issue</h2>
-    <p id="page-subtitle">Fill out the form below to submit a barangay issue report.</p>
+    <h2 id="page-title">Report a Barangay Issue / Mag-ulat ng Problema sa Barangay</h2>
+    <p id="page-subtitle">Fill out the form below to submit a barangay issue report. <br><em>(Sagutan ang form sa ibaba upang magpadala ng ulat.)</em></p>
     <hr id="divider-top">
 
     <div id="issue-type-group">
-      <label id="issue-type-label">Type of Issue:</label>
+      <label id="issue-type-label">Type of Issue / Uri ng Problema:</label>
 
       <input type="radio" id="normal" name="issue_level" value="normal">
-      <label for="normal" id="label-normal">Minor, non-urgent concern</label>
+      <label for="normal" id="label-normal">Minor, non-urgent concern <br><small><em>(Maliit na problema, hindi apurado)</em></small></label>
 
       <input type="radio" id="medium" name="issue_level" value="medium">
-      <label for="medium" id="label-medium">Needs attention soon</label>
+      <label for="medium" id="label-medium">Needs attention soon <br><small><em>(Kailangang maaksyunan kaagad)</em></small></label>
 
       <input type="radio" id="critical" name="issue_level" value="critical">
-      <label for="critical" id="label-critical">Urgent, requires immediate action</label>
+      <label for="critical" id="label-critical">Urgent, requires immediate action <br><small><em>(Apurado, nangangailangan ng agarang aksyon)</em></small></label>
     </div>
 
     <div id="description-group">
-      <label for="description" id="description-label">Description:</label>
-      <textarea id="description" name="description" placeholder="Describe the issue in detail..."></textarea>
+      <label for="description" id="description-label">Description / Paglalarawan:</label>
+      <textarea id="description" name="description" placeholder="Describe the issue in detail... (Ilarawan ang problema sa detalye...)"></textarea>
     </div>
 
     <div id="location-group">
-      <label for="location" id="location-label">Location of Issue:</label>
-      <input type="text" id="location" name="location" placeholder="e.g. Near the barangay hall, Rizal St.">
+      <label for="location" id="location-label">Location of Issue / Lokasyon ng Problema:</label>
+      <input type="text" id="location" name="location" placeholder="e.g. Near the barangay hall, Rizal St. (Hal. Malapit sa barangay hall, Rizal St.)">
     </div>
 
     <div id="photo-group">
-      <label for="photo" id="photo-label">Attach Photo (optional):</label>
+      <label for="photo" id="photo-label">Attach Photo (optional) / Maglakip ng Larawan (opsyonal):</label>
       <input type="file" id="photo" name="photo" accept="image/*">
     </div>
 
     <hr id="divider-bottom">
 
     <div id="form-actions">
-      <input type="submit" id="btn-submit" value="Submit Report">
-      <button id="btn-cancel" type="button" onclick="location.href='homepage.html'">Cancel</button>
+      <input type="submit" id="btn-submit" value="Submit Report / Ipasá ang Ulat">
+      <button id="btn-cancel" type="button" onclick="location.href='homepage.html'">Cancel / Kanselahin</button>
     </div>
 
   </form>
