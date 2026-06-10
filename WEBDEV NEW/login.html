@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bantay Barangay | Login</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #eef2f7 0%, #d9e2ec 100%);
+      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .login-container {
+      max-width: 440px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 2rem;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      animation: fadeSlideUp 0.4s ease-out;
+    }
+
+    .login-header {
+      background: #0b3b2f;
+      background-image: radial-gradient(circle at 10% 30%, rgba(60, 130, 110, 0.2) 2%, transparent 2.5%),
+                        radial-gradient(circle at 85% 70%, rgba(200, 230, 210, 0.1) 1.8%, transparent 2%);
+      background-size: 40px 40px, 32px 32px;
+      padding: 2rem;
+      text-align: center;
+      border-bottom: 6px solid #f4b942;
+    }
+
+    .login-header h1 {
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+
+    .login-header p {
+      color: #f9f3e2;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .login-form {
+      padding: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      color: #1a2e28;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid #e2e8e6;
+      border-radius: 1rem;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      background: #fefef7;
+      font-family: inherit;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #f4b942;
+      box-shadow: 0 0 0 3px rgba(244, 185, 66, 0.2);
+      background: #ffffff;
+    }
+
+    .btn-login {
+      width: 100%;
+      background: #0b3b2f;
+      color: white;
+      border: none;
+      padding: 0.9rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 3rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .btn-login:hover {
+      background: #1f5e4b;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(11, 59, 47, 0.25);
+    }
+
+    .btn-login:active {
+      transform: translateY(1px);
+    }
+
+    .demo-note {
+      background: #fef7e8;
+      border-left: 4px solid #f4b942;
+      padding: 0.9rem 1rem;
+      border-radius: 1rem;
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: #7a681d;
+    }
+
+    .demo-note code {
+      background: #fff0d0;
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.4rem;
+      font-size: 0.75rem;
+    }
+
+    .error-msg {
+      background: #fee2e2;
+      color: #dc2626;
+      padding: 0.75rem;
+      border-radius: 0.8rem;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+      display: none;
+      border-left: 4px solid #dc2626;
+    }
+
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="login-header">
+      <h1>🏛️ Bantay Barangay</h1>
+      <p>Citizen Services Portal Login</p>
+    </div>
+    <div class="login-form">
+      <div id="errorMsg" class="error-msg"></div>
+      <div class="form-group">
+        <label>👤 Username</label>
+        <input type="text" id="username" placeholder="Enter your username">
+      </div>
+      <div class="form-group">
+        <label>🔒 Password</label>
+        <input type="password" id="password" placeholder="Enter your password">
+      </div>
+      <button class="btn-login" onclick="handleLogin()">Login →</button>
+
+      <div class="demo-note">
+        <strong>📢 Demo Credentials:</strong><br>
+        • Resident: <code>resident / resident123</code><br>
+        • Super Admin: <code>admin / admin123</code>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function handleLogin() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const errorDiv = document.getElementById('errorMsg');
+
+      const users = {
+        resident: { password: 'resident123', role: 'resident', redirect: 'homepage.html' },
+        admin: { password: 'admin123', role: 'superadmin', redirect: 'superadmin.html' }
+      };
+
+      if (users[username] && users[username].password === password) {
+        sessionStorage.setItem('loggedInUser', JSON.stringify({
+          username: username,
+          role: users[username].role
+        }));
+        window.location.href = users[username].redirect;
+      } else {
+        errorDiv.textContent = '❌ Invalid username or password. Please try again.';
+        errorDiv.style.display = 'block';
+        setTimeout(() => {
+          errorDiv.style.display = 'none';
+        }, 3000);
+      }
+    }
+
+    if (sessionStorage.getItem('loggedInUser')) {
+      const user = JSON.parse(sessionStorage.getItem('loggedInUser'));
+      if (user.role === 'superadmin') {
+        window.location.href = 'superadmin.html';
+      } else {
+        window.location.href = 'homepage.html';
+      }
+    }
+
+    document.getElementById('username').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') handleLogin();
+    });
+    document.getElementById('password').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') handleLogin();
+    });
+  </script>
+</body>
+</html>
