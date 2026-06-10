@@ -3,60 +3,55 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="styles.css">
   <title>Report a Barangay Issue</title>
 </head>
 <body>
 
-  <p><a href="homepage.html">&#8592; Go Back</a></p>
-    
-  <h2>REPORT AN ISSUE ABOUT THE BARANGAY</h2>
-  <p>Fill out the form below to submit a barangay issue report.</p>
-  <hr>
+  <div id="back-link-wrapper">
+    <a id="back-link" href="homepage.html">&#8592; Go Back</a>
+  </div>
 
-  <form action="homepage.html" method="get">
+  <form id="report-form" action="homepage.html" method="get">
 
-    <!-- Type of issue -->
-    <p>
-      <label><b>TYPE OF ISSUE:</b></label><br><br>
+    <h2 id="page-title">Report a Barangay Issue</h2>
+    <p id="page-subtitle">Fill out the form below to submit a barangay issue report.</p>
+    <hr id="divider-top">
 
-      <!-- Normal - minor, non-urgent concern -->
+    <div id="issue-type-group">
+      <label id="issue-type-label">Type of Issue:</label>
+
       <input type="radio" id="normal" name="issue_level" value="normal">
-      <label for="normal">Normal</label> - minor, non-urgent concern<br><br>
+      <label for="normal" id="label-normal">Minor, non-urgent concern</label>
 
-      <!-- Medium - needs attention soon -->
       <input type="radio" id="medium" name="issue_level" value="medium">
-      <label for="medium">Medium</label> - needs attention soon<br><br>
+      <label for="medium" id="label-medium">Needs attention soon</label>
 
-      <!-- Critical - urgent, requires immediate action -->
       <input type="radio" id="critical" name="issue_level" value="critical">
-      <label for="critical">Critical</label> - urgent, requires immediate action
-    </p>
+      <label for="critical" id="label-critical">Urgent, requires immediate action</label>
+    </div>
 
-    <!-- Description box -->
-    <p>
-      <label for="description"><b>DESCRIPTION:</b></label><br>
-      <textarea id="description" name="description" rows="6" cols="50" placeholder="Describe the issue in detail..."></textarea>
-    </p>
+    <div id="description-group">
+      <label for="description" id="description-label">Description:</label>
+      <textarea id="description" name="description" placeholder="Describe the issue in detail..."></textarea>
+    </div>
 
-    <!-- Location of the issue -->
-    <p>
-      <label for="location"><b>LOCATION OF ISSUE:</b></label><br>
+    <div id="location-group">
+      <label for="location" id="location-label">Location of Issue:</label>
       <input type="text" id="location" name="location" placeholder="e.g. Near the barangay hall, Rizal St.">
-    </p>
+    </div>
 
-    <!-- Optional photo upload -->
-    <p>
-      <label for="photo"><b>ATTACH PHOTO (optional):</b></label><br>
+    <div id="photo-group">
+      <label for="photo" id="photo-label">Attach Photo (optional):</label>
       <input type="file" id="photo" name="photo" accept="image/*">
-    </p>
+    </div>
 
-    <hr>
+    <hr id="divider-bottom">
 
-    <p>
-      <input type="submit" value="Submit Report">
-      &nbsp;
-      <a href="homepage.html"><button type="button">Cancel</button></a>
-    </p>
+    <div id="form-actions">
+      <input type="submit" id="btn-submit" value="Submit Report">
+      <button id="btn-cancel" type="button" onclick="location.href='homepage.html'">Cancel</button>
+    </div>
 
   </form>
 
