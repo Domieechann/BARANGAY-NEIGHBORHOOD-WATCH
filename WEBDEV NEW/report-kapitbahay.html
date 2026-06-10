@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Bantay Barangay | Report Kapitbahay</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #eef2f7 0%, #d9e2ec 100%);
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+    }
+
+    /* main portal card container - consistent with previous pages */
+    .portal-container {
+      max-width: 880px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 2rem;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    /* header with barangay identity - same color scheme #0b3b2f and gold accent */
+    .portal-header {
+      background: #0b3b2f;
+      background-image: radial-gradient(circle at 10% 30%, rgba(60, 130, 110, 0.2) 2%, transparent 2.5%),
+                        radial-gradient(circle at 85% 70%, rgba(200, 230, 210, 0.1) 1.8%, transparent 2%);
+      background-size: 40px 40px, 32px 32px;
+      padding: 1.5rem 2rem;
+      border-bottom: 6px solid #f4b942;
+    }
+
+    .back-link-wrapper {
+      margin-bottom: 0.75rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #f9f3e2;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(2px);
+    }
+
+    .back-link:hover {
+      background: rgba(0, 0, 0, 0.4);
+      transform: translateX(-3px);
+      color: white;
+    }
+
+    .header-title-section {
+      text-align: center;
+    }
+
+    .portal-header h2 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: white;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-top: 0.25rem;
+    }
+
+    .header-sub {
+      font-size: 1rem;
+      color: #f9f3e2;
+      background: rgba(0, 0, 0, 0.2);
+      display: inline-block;
+      padding: 0.25rem 1.2rem;
+      border-radius: 40px;
+      margin-top: 0.6rem;
+      font-weight: 500;
+    }
+
+    .elegant-divider {
+      height: 4px;
+      background: linear-gradient(90deg, #f4b942, #d9a13b, #f4b942);
+      width: 100%;
+    }
+
+    /* form styling - consistent design language */
+    .form-container {
+      padding: 2rem 2rem 2rem 2rem;
+    }
+
+    .report-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .form-label {
+      font-weight: 700;
+      color: #1a2e28;
+      font-size: 1rem;
+      letter-spacing: -0.2px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* radio group styling - compact spacing as requested */
+    .radio-group {
+      background: #fefef7;
+      padding: 0.75rem 1rem;
+      border-radius: 1rem;
+      border: 1px solid #e6edea;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: baseline;
+    }
+
+    .radio-option {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      color: #2c4a3e;
+    }
+
+    .radio-option input[type="radio"] {
+      accent-color: #0b3b2f;
+      width: 0.95rem;
+      height: 0.95rem;
+      cursor: pointer;
+      margin: 0;
+    }
+
+    .radio-desc {
+      font-size: 0.75rem;
+      color: #6f8b7e;
+      margin-left: 0;
+      display: inline;
+    }
+
+    /* input fields */
+    input[type="text"], 
+    textarea, 
+    input[type="file"] {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid #e2e8e6;
+      border-radius: 1rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      background: #fefef7;
+      color: #1e2f29;
+    }
+
+    input[type="text"]:focus, 
+    textarea:focus {
+      outline: none;
+      border-color: #f4b942;
+      box-shadow: 0 0 0 3px rgba(244, 185, 66, 0.2);
+      background: #ffffff;
+    }
+
+    input[type="file"] {
+      padding: 0.6rem 0.5rem;
+      background: #fefef7;
+      border: 1.5px dashed #cbdcd5;
+      cursor: pointer;
+    }
+
+    input[type="file"]:hover {
+      border-color: #f4b942;
+      background: #fffcf5;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .helper-text {
+      font-size: 0.75rem;
+      color: #8da396;
+      margin-top: 0.25rem;
+    }
+
+    .confidential-note {
+      background: #fef7e8;
+      border-left: 4px solid #f4b942;
+      padding: 0.9rem 1.2rem;
+      border-radius: 1rem;
+      font-size: 0.85rem;
+      color: #7a681d;
+      margin: 0.25rem 0;
+    }
+
+    .confidential-note small {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* action buttons */
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-submit {
+      background: #0b3b2f;
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 3rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-family: inherit;
+    }
+
+    .btn-submit:hover {
+      background: #1f5e4b;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(11, 59, 47, 0.25);
+    }
+
+    .btn-submit:active {
+      transform: translateY(1px);
+    }
+
+    .btn-cancel {
+      background: transparent;
+      border: 1.5px solid #cbdcd5;
+      padding: 0.75rem 1.8rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: 3rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #476b5f;
+      text-decoration: none;
+      display: inline-block;
+      font-family: inherit;
+      text-align: center;
+    }
+
+    .btn-cancel:hover {
+      background: #f0f4f2;
+      border-color: #b3c9be;
+      color: #1a2e28;
+      transform: translateY(-1px);
+    }
+
+    a.btn-cancel {
+      text-align: center;
+    }
+
+    /* footer same as main portal */
+    .portal-footer {
+      background: #f8fafc;
+      padding: 1.2rem 2rem;
+      text-align: center;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.8rem;
+      color: #5b6e66;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: #eef2e7;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-weight: 500;
+      font-size: 0.7rem;
+      color: #2c5a4a;
+    }
+
+    .emergency-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    hr {
+      display: none;
+    }
+
+    /* mobile optimization */
+    @media (max-width: 640px) {
+      body {
+        padding: 1rem;
+      }
+      .form-container {
+        padding: 1.5rem;
+      }
+      .portal-header h2 {
+        font-size: 1.5rem;
+      }
+      .radio-group {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.6rem;
+      }
+      .radio-option {
+        width: 100%;
+      }
+      .radio-desc {
+        margin-left: 0;
+        display: inline;
+      }
+      .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .btn-submit, .btn-cancel {
+        text-align: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .portal-footer {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* subtle animation */
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .portal-container {
+      animation: fadeSlideUp 0.4s ease-out;
+    }
+
+    /* focus accessibility */
+    input:focus-visible, 
+    textarea:focus-visible, 
+    button:focus-visible, 
+    a:focus-visible {
+      outline: 3px solid #f4b942;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="portal-container">
+  <div class="portal-header">
+    <div class="back-link-wrapper">
+      <a href="homepage.html" class="back-link">← Go Back</a>
+    </div>
+    <div class="header-title-section">
+      <h2>REPORT KAPITBAHAY</h2>
+      <div class="header-sub">Fill out the form below to submit a report about your neighbor.</div>
+    </div>
+  </div>
+  <div class="elegant-divider"></div>
+
+  <div class="form-container">
+    <form action="homepage.html" method="get" class="report-form">
+
+      <!-- Type of issue radio buttons - compact styling -->
+      <div class="form-group">
+        <div class="form-label">
+          <span>⚠️</span> TYPE OF ISSUE:
+        </div>
+        <div class="radio-group">
+          <label class="radio-option">
+            <input type="radio" id="normal" name="issue_level" value="normal"> 
+            <span><strong>Normal</strong></span>
+          </label>
+          <span class="radio-desc">— minor, non-urgent concern</span>
+
+          <label class="radio-option">
+            <input type="radio" id="medium" name="issue_level" value="medium"> 
+            <span><strong>Medium</strong></span>
+          </label>
+          <span class="radio-desc">— needs attention soon</span>
+
+          <label class="radio-option">
+            <input type="radio" id="critical" name="issue_level" value="critical"> 
+            <span><strong>Critical</strong></span>
+          </label>
+          <span class="radio-desc">— urgent, requires immediate action</span>
+        </div>
+      </div>
+
+      <!-- Name of the person being reported -->
+      <div class="form-group">
+        <div class="form-label">
+          <span>👤</span> NAME OF REPORTED INDIVIDUAL:
+        </div>
+        <input type="text" id="reported_name" name="reported_name" placeholder="Enter full name of the person" required>
+        <div class="helper-text">Please provide the complete name if known.</div>
+      </div>
+
+      <!-- Exact address of the person being reported -->
+      <div class="form-group">
+        <div class="form-label">
+          <span>🏠</span> ADDRESS OF THE REPORTED INDIVIDUAL:
+        </div>
+        <input type="text" id="address" name="address" placeholder="e.g. Blk 5 Lot 3, Sampaguita St., Barangay...">
+        <div class="helper-text">Exact address helps barangay officials locate the resident.</div>
+      </div>
+
+      <!-- Description of the issue -->
+      <div class="form-group">
+        <div class="form-label">
+          <span>📝</span> DESCRIBE THE ISSUE:
+        </div>
+        <textarea id="description" name="description" rows="5" placeholder="Ilarawan ang isyu nang detalyado... (Describe the issue in detail)"></textarea>
+        <div class="helper-text">Include dates, times, and specific incidents to help with mediation.</div>
+      </div>
+
+      <!-- Optional photo evidence -->
+      <div class="form-group">
+        <div class="form-label">
+          <span>📸</span> ATTACH PHOTO (optional):
+        </div>
+        <input type="file" id="photo" name="photo" accept="image/*">
+        <div class="helper-text">Upload supporting image (JPG, PNG) — max 5MB if applicable.</div>
+      </div>
+
+      <!-- Confidential note -->
+      <div class="confidential-note">
+        <small>
+          🔒 <strong>Note:</strong> This report is confidential and will be handled with discretion. 
+          Your identity will be protected according to barangay data privacy protocols.
+        </small>
+      </div>
+
+      <!-- Form actions -->
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">📬 Submit Report</button>
+        <a href="homepage.html" class="btn-cancel">Cancel</a>
+      </div>
+    </form>
+  </div>
+
+  <div class="portal-footer">
+    <div class="emergency-note">
+      <span>📞 Barangay Hotline: (02) 1234 5678</span>
+    </div>
+    <div class="badge">🔒 Confidential Reporting · Data Privacy Compliant</div>
+    <div>🕊️ Serbisyong Tapat, Barangay Sambayan</div>
+  </div>
+</div>
+
+</body>
+</html>

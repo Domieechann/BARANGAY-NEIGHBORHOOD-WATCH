@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Bantay Barangay | Report Officials</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #eef2f7 0%, #d9e2ec 100%);
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+    }
+
+    /* main portal card container - consistent with all pages */
+    .portal-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 2rem;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    /* header with barangay identity - same color scheme #0b3b2f and gold accent */
+    .portal-header {
+      background: #0b3b2f;
+      background-image: radial-gradient(circle at 10% 30%, rgba(60, 130, 110, 0.2) 2%, transparent 2.5%),
+                        radial-gradient(circle at 85% 70%, rgba(200, 230, 210, 0.1) 1.8%, transparent 2%);
+      background-size: 40px 40px, 32px 32px;
+      padding: 1.5rem 2rem;
+      border-bottom: 6px solid #f4b942;
+    }
+
+    .back-link-wrapper {
+      margin-bottom: 0.75rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #f9f3e2;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(2px);
+    }
+
+    .back-link:hover {
+      background: rgba(0, 0, 0, 0.4);
+      transform: translateX(-3px);
+      color: white;
+    }
+
+    .header-title-section {
+      text-align: center;
+    }
+
+    .portal-header h2 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: white;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-top: 0.25rem;
+    }
+
+    .header-sub {
+      font-size: 1rem;
+      color: #f9f3e2;
+      background: rgba(0, 0, 0, 0.2);
+      display: inline-block;
+      padding: 0.25rem 1.2rem;
+      border-radius: 40px;
+      margin-top: 0.6rem;
+      font-weight: 500;
+    }
+
+    .elegant-divider {
+      height: 4px;
+      background: linear-gradient(90deg, #f4b942, #d9a13b, #f4b942);
+      width: 100%;
+    }
+
+    /* form container */
+    .form-container {
+      padding: 2rem 2rem 2rem 2rem;
+    }
+
+    .report-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .form-label {
+      font-weight: 700;
+      color: #1a2e28;
+      font-size: 1rem;
+      letter-spacing: -0.2px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* select dropdown styling */
+    select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid #e2e8e6;
+      border-radius: 1rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      background: #fefef7;
+      color: #1e2f29;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23476b5f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1rem;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #f4b942;
+      box-shadow: 0 0 0 3px rgba(244, 185, 66, 0.2);
+      background-color: #ffffff;
+    }
+
+    select:hover {
+      border-color: #cbdcd5;
+    }
+
+    /* input fields */
+    input[type="text"], 
+    input[type="date"],
+    textarea, 
+    input[type="file"] {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid #e2e8e6;
+      border-radius: 1rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      background: #fefef7;
+      color: #1e2f29;
+    }
+
+    input[type="text"]:focus, 
+    input[type="date"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #f4b942;
+      box-shadow: 0 0 0 3px rgba(244, 185, 66, 0.2);
+      background: #ffffff;
+    }
+
+    input[type="file"] {
+      padding: 0.6rem 0.5rem;
+      background: #fefef7;
+      border: 1.5px dashed #cbdcd5;
+      cursor: pointer;
+    }
+
+    input[type="file"]:hover {
+      border-color: #f4b942;
+      background: #fffcf5;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 110px;
+    }
+
+    .helper-text {
+      font-size: 0.75rem;
+      color: #8da396;
+      margin-top: 0.25rem;
+    }
+
+    /* confidentiality note */
+    .confidential-note {
+      background: #fef7e8;
+      border-left: 4px solid #f4b942;
+      padding: 0.9rem 1.2rem;
+      border-radius: 1rem;
+      font-size: 0.85rem;
+      color: #7a681d;
+      margin: 0.25rem 0;
+    }
+
+    .confidential-note small {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* action buttons */
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-submit {
+      background: #0b3b2f;
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 3rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-family: inherit;
+    }
+
+    .btn-submit:hover {
+      background: #1f5e4b;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(11, 59, 47, 0.25);
+    }
+
+    .btn-submit:active {
+      transform: translateY(1px);
+    }
+
+    .btn-cancel {
+      background: transparent;
+      border: 1.5px solid #cbdcd5;
+      padding: 0.75rem 1.8rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: 3rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #476b5f;
+      text-decoration: none;
+      display: inline-block;
+      font-family: inherit;
+      text-align: center;
+    }
+
+    .btn-cancel:hover {
+      background: #f0f4f2;
+      border-color: #b3c9be;
+      color: #1a2e28;
+      transform: translateY(-1px);
+    }
+
+    a.btn-cancel {
+      text-align: center;
+    }
+
+    /* section divider for dropdown groups */
+    .dropdown-section {
+      background: #fefef7;
+      border-radius: 1rem;
+      padding: 0.25rem 0;
+    }
+
+    /* footer same as main portal */
+    .portal-footer {
+      background: #f8fafc;
+      padding: 1.2rem 2rem;
+      text-align: center;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.8rem;
+      color: #5b6e66;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: #eef2e7;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-weight: 500;
+      font-size: 0.7rem;
+      color: #2c5a4a;
+    }
+
+    .emergency-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    hr {
+      display: none;
+    }
+
+    /* mobile optimization */
+    @media (max-width: 640px) {
+      body {
+        padding: 1rem;
+      }
+      .form-container {
+        padding: 1.5rem;
+      }
+      .portal-header h2 {
+        font-size: 1.5rem;
+      }
+      .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .btn-submit, .btn-cancel {
+        text-align: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .portal-footer {
+        flex-direction: column;
+        text-align: center;
+      }
+      select {
+        font-size: 0.9rem;
+        padding: 0.75rem 1rem;
+      }
+    }
+
+    /* subtle animation */
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .portal-container {
+      animation: fadeSlideUp 0.4s ease-out;
+    }
+
+    /* focus accessibility */
+    select:focus-visible,
+    input:focus-visible, 
+    textarea:focus-visible, 
+    button:focus-visible, 
+    a:focus-visible {
+      outline: 3px solid #f4b942;
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="portal-container">
+  <div class="portal-header">
+    <div class="back-link-wrapper">
+      <a href="homepage.html" class="back-link">← Go Back</a>
+    </div>
+    <div class="header-title-section">
+      <h2>REPORT OFFICIALS</h2>
+      <div class="header-sub">Select the official you want to report and fill out the details below.</div>
+    </div>
+  </div>
+  <div class="elegant-divider"></div>
+
+  <div class="form-container">
+    <form action="homepage.html" method="get" class="report-form">
+
+      <!-- Barangay Officials dropdown -->
+      <div class="form-group">
+        <div class="form-label">
+          <span>🏛️</span> BARANGAY OFFICIALS:
+        </div>
+        <select id="barangay_official" name="barangay_official">
+          <option value="">-- Select Barangay Official --</option>
+          <option value="punong_barangay">Punong Barangay - Juan dela Cruz</option>
+          <option value="kagawad_1">Kagawad - Maria Santos</option>
+          <option value="kagawad_2">Kagawad - Pedro Reyes</option>
+          <option value="kagawad_3">Kagawad - Luzviminda Torres</option>
+          <option value="kagawad_4">Kagawad - Ricardo Gomez</option>
+          <option value="kagawad_5">Kagawad - Elena Fernandez</option>
+          <option value="kagawad_6">Kagawad - Armando Cruz</option>
+          <option value="kagawad_7">Kagawad - Beatriz Mendoza</option>
+          <option value="secretary">Barangay Secretary - Antonio Villanueva</option>
+          <option value="treasurer">Barangay Treasurer - Corazon Ramos</option>
+        </select>
+        <div class="helper-text">Select the elected or appointed barangay official.</div>
+      </div>
+
+      <!-- SK Kagawads dropdown -->
+      <div class="form-group">
+        <div class="form-label">
+          <span>👥</span> SK KAGAWADS:
+        </div>
+        <select id="sk_official" name="sk_official">
+          <option value="">-- Select SK Official --</option>
+          <option value="sk_chairman">SK Chairman - Kevin Delos Santos</option>
+          <option value="sk_kagawad_1">SK Kagawad - Andrea Rivera</option>
+          <option value="sk_kagawad_2">SK Kagawad - Bryan Lopez</option>
+          <option value="sk_kagawad_3">SK Kagawad - Christine Go</option>
+          <option value="sk_kagawad_4">SK Kagawad - Daniel Mercado</option>
+          <option value="sk_kagawad_5">SK Kagawad - Eliza Salvador</option>
+          <option value="sk_kagawad_6">SK Kagawad - Francis Cruz</option>
+          <option value="sk_secretary">SK Secretary - Grace Lim</option>
+          <option value="sk_treasurer">SK Treasurer - Henry Yu</option>
+        </select>
+        <div class="helper-text">Select the Sangguniang Kabataan official involved.</div>
+      </div>
+
+      <!-- Tanods dropdown -->
+      <div class="form-group">
+        <div class="form-label">
+          <span>🛡️</span> TANODS:
+        </div>
+        <select id="tanod" name="tanod">
+          <option value="">-- Select Tanod --</option>
+          <option value="tanod_chief">Tanod Chief - Gregorio Bautista</option>
+          <option value="tanod_1">Tanod - Rolando Dimagiba</option>
+          <option value="tanod_2">Tanod - Nelson Agbayani</option>
+          <option value="tanod_3">Tanod - Fernando Samson</option>
+          <option value="tanod_4">Tanod - Joselito Mariano</option>
+          <option value="tanod_5">Tanod - Vicente Ocampo</option>
+          <option value="tanod_6">Tanod - Romeo Pascual</option>
+          <option value="tanod_7">Tanod - Eduardo Santiago</option>
+        </select>
+        <div class="helper-text">Select the barangay tanod (if applicable).</div>
+      </div>
+
+      <!-- Nature of complaint -->
+      <div class="form-group">
+        <div class="form-label">
+          <span>⚖️</span> NATURE OF COMPLAINT:
+        </div>
+        <select id="complaint_type" name="complaint_type">
+          <option value="">-- Select --</option>
+          <option value="misconduct">Misconduct</option>
+          <option value="corruption">Corruption</option>
+          <option value="negligence">Negligence of Duty</option>
+          <option value="abuse">Abuse of Authority</option>
+          <option value="harassment">Harassment</option>
+          <option value="other">Other</option>
+        </select>
+        <div class="helper-text">Choose the category that best describes the complaint.</div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <div class="form-label">
+          <span>📝</span> DESCRIPTION OF COMPLAINT:
+        </div>
+        <textarea id="description" name="description" rows="5" placeholder="Describe the incident in detail. Include specific actions, dates, witnesses, and any relevant information..."></textarea>
+        <div class="helper-text">Provide as much detail as possible for proper investigation.</div>
+      </div>
+
+      <!-- Date of incident -->
+      <div class="form-group">
+        <div class="form-label">
+          <span>📅</span> DATE OF INCIDENT:
+        </div>
+        <input type="date" id="incident_date" name="incident_date">
+        <div class="helper-text">When did the incident occur? (Approximate date if exact is unknown)</div>
+      </div>
+
+      <!-- Optional evidence upload -->
+      <div class="form-group">
+        <div class="form-label">
+          <span>📎</span> ATTACH EVIDENCE (optional):
+        </div>
+        <input type="file" id="evidence" name="evidence" accept="image/*,.pdf">
+        <div class="helper-text">Upload photos, documents, or screenshots (JPG, PNG, PDF). Max size: 10MB.</div>
+      </div>
+
+      <!-- Confidentiality note -->
+      <div class="confidential-note">
+        <small>
+          🔒 <strong>Note:</strong> This report is confidential and will be handled with discretion. 
+          Your identity will be protected according to barangay data privacy protocols and Republic Act No. 6713.
+        </small>
+      </div>
+
+      <!-- Form actions -->
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">📬 Submit Report</button>
+        <a href="homepage.html" class="btn-cancel">Cancel</a>
+      </div>
+    </form>
+  </div>
+
+  <div class="portal-footer">
+    <div class="emergency-note">
+      <span>📞 Barangay Hotline: (02) 1234 5678</span>
+    </div>
+    <div class="badge">🔒 Confidential Reporting · Data Privacy Compliant</div>
+    <div>🕊️ Serbisyong Tapat, Barangay Sambayan</div>
+  </div>
+</div>
+
+</body>
+</html>
