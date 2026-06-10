@@ -1,0 +1,262 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #f0f4f8;
+  color: #2d3748;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+#back-link-wrapper {
+  max-width: 640px;
+  margin: 0 auto 0.5rem;
+}
+
+#back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  background-color: #c0392b;
+  padding: 8px 16px;
+  border-radius: 8px;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+#back-link:hover {
+  background-color: #96281b;
+}
+
+#back-link:active {
+  transform: scale(0.97);
+}
+
+#report-form {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #d1dce8;
+  padding: 2rem 2.5rem;
+  max-width: 640px;
+  margin: 0 auto;
+  box-shadow: 0 2px 12px rgba(74, 111, 165, 0.08);
+}
+
+#page-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1a2f4e;
+  margin-bottom: 0.4rem;
+}
+
+#page-subtitle {
+  font-size: 0.9rem;
+  color: #6b7c93;
+  margin-bottom: 1.5rem;
+}
+
+#divider-top,
+#divider-bottom {
+  border: none;
+  border-top: 1px solid #e2e8f0;
+  margin: 1.25rem 0;
+}
+
+#issue-type-group,
+#description-group,
+#location-group,
+#photo-group {
+  margin-bottom: 1.4rem;
+}
+
+#issue-type-label,
+#description-label,
+#location-label,
+#photo-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #4a6fa5;
+  margin-bottom: 0.6rem;
+}
+
+/* Hide radio inputs */
+#normal, #medium, #critical {
+  display: none;
+}
+
+#label-normal,
+#label-medium,
+#label-critical {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #d1dce8;
+  cursor: pointer;
+  margin-bottom: 10px;
+  transition: border-color 0.2s, background-color 0.2s;
+  font-size: 0.9rem;
+  color: #4a5568;
+}
+
+#label-normal:hover,
+#label-medium:hover,
+#label-critical:hover {
+  border-color: #4a6fa5;
+  background-color: #f5f8ff;
+}
+
+/* KEY FIX: + selector, not ~ */
+#normal:checked + #label-normal,
+#medium:checked + #label-medium,
+#critical:checked + #label-critical {
+  border-color: #4a6fa5;
+  background-color: #eef3fb;
+}
+
+#label-normal::before {
+  content: "Normal";
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background-color: #e6f4ea;
+  color: #2e7d32;
+  flex-shrink: 0;
+}
+
+#label-medium::before {
+  content: "Medium";
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background-color: #fff8e1;
+  color: #b45309;
+  flex-shrink: 0;
+}
+
+#label-critical::before {
+  content: "Critical";
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background-color: #fdecea;
+  color: #b91c1c;
+  flex-shrink: 0;
+}
+
+#description,
+#location {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1dce8;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: #2d3748;
+  background-color: #fafcff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+#description {
+  resize: vertical;
+  min-height: 130px;
+}
+
+#description:focus,
+#location:focus {
+  outline: none;
+  border-color: #4a6fa5;
+  box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.15);
+}
+
+#photo {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px dashed #b0bec9;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.88rem;
+  color: #6b7c93;
+  background-color: #fafcff;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+#photo:hover {
+  border-color: #4a6fa5;
+  background-color: #f5f8ff;
+}
+
+#form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 0.5rem;
+  align-items: center;
+}
+
+#btn-submit {
+  background-color: #4a6fa5;
+  color: #ffffff;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+#btn-submit:hover {
+  background-color: #2c4a7c;
+}
+
+#btn-submit:active {
+  transform: scale(0.98);
+}
+
+#btn-cancel {
+  background-color: transparent;
+  color: #6b7c93;
+  border: 1px solid #d1dce8;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.92rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+#btn-cancel:hover {
+  border-color: #b0bec9;
+  color: #4a6fa5;
+}
+
+@media (max-width: 600px) {
+  #report-form {
+    padding: 1.5rem 1.2rem;
+  }
+
+  #form-actions {
+    flex-direction: column;
+  }
+
+  #btn-submit,
+  #btn-cancel {
+    width: 100%;
+  }
+}
