@@ -2,58 +2,640 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="stylesheet" href="styles.css">
-  <title>Report a Barangay Issue</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Bantay Barangay | Report an Issue</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #eef2f7 0%, #d9e2ec 100%);
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+    }
+
+    /* main portal card container - same as homepage */
+    .portal-container {
+      max-width: 880px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 2rem;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 4px 12px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    /* header with barangay identity - matches homepage color scheme */
+    .portal-header {
+      background: #020353;
+      background-image: radial-gradient(circle at 10% 30%, rgba(60, 130, 110, 0.2) 2%, transparent 2.5%),
+                        radial-gradient(circle at 85% 70%, rgba(200, 230, 210, 0.1) 1.8%, transparent 2%);
+      background-size: 40px 40px, 32px 32px;
+      padding: 1.5rem 2rem;
+      border-bottom: 6px solid #f4b942;
+    }
+
+    .back-link-wrapper {
+      margin-bottom: 0.75rem;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #f9f3e2;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      background: rgba(0, 0, 0, 0.25);
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(2px);
+    }
+
+    .back-link:hover {
+      background: rgba(0, 0, 0, 0.4);
+      transform: translateX(-3px);
+      color: white;
+    }
+
+    .header-title-section {
+      text-align: center;
+    }
+
+    .portal-header h2 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: white;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-top: 0.25rem;
+    }
+
+    .header-sub {
+      font-size: 1rem;
+      color: #f9f3e2;
+      background: rgba(0, 0, 0, 0.2);
+      display: inline-block;
+      padding: 0.25rem 1.2rem;
+      border-radius: 40px;
+      margin-top: 0.6rem;
+      font-weight: 500;
+    }
+
+    .elegant-divider {
+      height: 4px;
+      background: linear-gradient(90deg, #f4b942, #d9a13b, #f4b942);
+      width: 100%;
+    }
+
+    /* form styling - consistent with clean portal design */
+    .form-container {
+      padding: 2rem 2rem 2.5rem 2rem;
+    }
+
+    .issue-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .form-label {
+      font-weight: 700;
+      color: #1a2e28;
+      font-size: 1rem;
+      letter-spacing: -0.2px;
+    }
+
+    /* Dropdown select styling */
+    select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid #e2e8e6;
+      border-radius: 1rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      background: #fefef7;
+      color: #1e2f29;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23476b5f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1rem;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #f4b942;
+      box-shadow: 0 0 0 3px rgba(244, 185, 66, 0.2);
+      background: #ffffff;
+    }
+
+    select:hover {
+      border-color: #cbdcd5;
+    }
+
+    /* Textarea and input fields */
+    textarea, 
+    input[type="text"], 
+    input[type="file"] {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid #e2e8e6;
+      border-radius: 1rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      background: #fefef7;
+      color: #1e2f29;
+    }
+
+    textarea:focus, 
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #f4b942;
+      box-shadow: 0 0 0 3px rgba(244, 185, 66, 0.2);
+      background: #ffffff;
+    }
+
+    input[type="file"] {
+      padding: 0.6rem 0.5rem;
+      background: #fefef7;
+      border: 1.5px dashed #cbdcd5;
+      cursor: pointer;
+    }
+
+    input[type="file"]:hover {
+      border-color: #f4b942;
+      background: #fffcf5;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    /* helper text */
+    .helper-text {
+      font-size: 0.75rem;
+      color: #8da396;
+      margin-top: 0.25rem;
+    }
+
+    /* action buttons */
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-submit {
+      background: #0b3b2f;
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 3rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-family: inherit;
+    }
+
+    .btn-submit:hover {
+      background: #1f5e4b;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(11, 59, 47, 0.25);
+    }
+
+    .btn-submit:active {
+      transform: translateY(1px);
+    }
+
+    .btn-cancel {
+      background: transparent;
+      border: 1.5px solid #cbdcd5;
+      padding: 0.75rem 1.8rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: 3rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #476b5f;
+      text-decoration: none;
+      display: inline-block;
+      font-family: inherit;
+      text-align: center;
+    }
+
+    .btn-cancel:hover {
+      background: #f0f4f2;
+      border-color: #b3c9be;
+      color: #1a2e28;
+      transform: translateY(-1px);
+    }
+
+    a.btn-cancel {
+      text-align: center;
+    }
+
+    /* footer same as main portal */
+    .portal-footer {
+      background: #f8fafc;
+      padding: 1.2rem 2rem;
+      text-align: center;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.8rem;
+      color: #5b6e66;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: #eef2e7;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-weight: 500;
+      font-size: 0.7rem;
+      color: #2c5a4a;
+    }
+
+    .emergency-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    hr {
+      display: none;
+    }
+
+    /* mobile optimization */
+    @media (max-width: 640px) {
+      body {
+        padding: 1rem;
+      }
+      .form-container {
+        padding: 1.5rem;
+      }
+      .portal-header h2 {
+        font-size: 1.5rem;
+      }
+      .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .btn-submit, .btn-cancel {
+        text-align: center;
+        justify-content: center;
+        width: 100%;
+      }
+      .portal-footer {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    /* subtle animation */
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .portal-container {
+      animation: fadeSlideUp 0.4s ease-out;
+    }
+
+    /* focus accessibility */
+    input:focus-visible, 
+    textarea:focus-visible, 
+    select:focus-visible,
+    button:focus-visible, 
+    a:focus-visible {
+      outline: 3px solid #f4b942;
+      outline-offset: 2px;
+    }
+
+    /* validation styles */
+    .field-error {
+      border-color: #e53e3e !important;
+      box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.15) !important;
+    }
+
+    .error-msg {
+      color: #c53030;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-top: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      animation: fadeSlideUp 0.2s ease-out;
+    }
+
+    .error-msg::before {
+      content: "⚠";
+      font-size: 0.8rem;
+    }
+
+    .success-toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #0b3b2f;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 1rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      animation: fadeSlideUp 0.3s ease-out;
+      border-left: 4px solid #f4b942;
+    }
+
+    .char-counter {
+      font-size: 0.73rem;
+      color: #8da396;
+      text-align: right;
+      margin-top: 0.25rem;
+      transition: color 0.2s;
+    }
+
+    .char-counter.warn { color: #d97706; }
+    .char-counter.danger { color: #c53030; font-weight: 700; }
+  </style>
 </head>
 <body>
 
-  <div id="back-link-wrapper">
-    <a id="back-link" href="homepage.html">&#8592; Go Back / Bumalik</a>
+<div class="portal-container">
+  <div class="portal-header">
+    <div class="back-link-wrapper">
+      <a href="homepage.html" class="back-link">← Go Back</a>
+    </div>
+    <div class="header-title-section">
+      <h2>REPORT AN ISSUE ABOUT THE BARANGAY</h2>
+      <div class="header-sub">Fill out the form below to submit a barangay issue report.</div>
+    </div>
+  </div>
+  <div class="elegant-divider"></div>
+
+  <div class="form-container">
+    <form id="barangayIssueForm" action="homepage.html" method="get" class="issue-form" novalidate>
+
+      <!-- Type of issue - DROPDOWN instead of radio buttons -->
+      <div class="form-group">
+        <div class="form-label">
+          TYPE OF ISSUE:
+        </div>
+        <select id="issue_level" name="issue_level" required>
+          <option value="">-- Select Priority Level --</option>
+          <option value="normal">Normal - Minor, non-urgent concern</option>
+          <option value="medium">Medium - Needs attention soon</option>
+          <option value="critical">Critical - Urgent, requires immediate action</option>
+        </select>
+        <div class="helper-text">Select the urgency level of your concern.</div>
+      </div>
+
+      <!-- Description box -->
+      <div class="form-group">
+        <div class="form-label">
+          DESCRIPTION:
+        </div>
+        <textarea id="description" name="description" rows="5" placeholder="Describe the issue in detail... (e.g., what happened, since when, how it affects the community)"></textarea>
+        <div class="char-counter" id="desc-counter">0 / 800</div>
+        <div class="helper-text">Provide as much detail as possible for faster action.</div>
+      </div>
+
+      <!-- Location of the issue -->
+      <div class="form-group">
+        <div class="form-label">
+          LOCATION OF ISSUE:
+        </div>
+        <input type="text" id="location" name="location" placeholder="e.g. Near the barangay hall, Rizal St., Purok 3">
+        <div class="helper-text">Exact street or landmark helps our team respond quickly.</div>
+      </div>
+
+      <!-- Optional photo upload -->
+      <div class="form-group">
+        <div class="form-label">
+          ATTACH PHOTO (optional):
+        </div>
+        <input type="file" id="photo" name="photo" accept="image/*">
+        <div class="helper-text">Upload a clear image (JPG, PNG) — max 5MB (if applicable).</div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">Submit Report</button>
+        <a href="homepage.html" class="btn-cancel">Cancel</a>
+      </div>
+    </form>
   </div>
 
-  <form id="report-form" action="homepage.html" method="get">
-
-    <h2 id="page-title">Report a Barangay Issue / Mag-ulat ng Problema sa Barangay</h2>
-    <p id="page-subtitle">Fill out the form below to submit a barangay issue report. <br><em>(Sagutan ang form sa ibaba upang magpadala ng ulat.)</em></p>
-    <hr id="divider-top">
-
-    <div id="issue-type-group">
-      <label id="issue-type-label">Type of Issue / Uri ng Problema:</label>
-
-      <input type="radio" id="normal" name="issue_level" value="normal">
-      <label for="normal" id="label-normal">Minor, non-urgent concern <br><small><em>(Maliit na problema, hindi apurado)</em></small></label>
-
-      <input type="radio" id="medium" name="issue_level" value="medium">
-      <label for="medium" id="label-medium">Needs attention soon <br><small><em>(Kailangang maaksyunan kaagad)</em></small></label>
-
-      <input type="radio" id="critical" name="issue_level" value="critical">
-      <label for="critical" id="label-critical">Urgent, requires immediate action <br><small><em>(Apurado, nangangailangan ng agarang aksyon)</em></small></label>
+  <div class="portal-footer">
+    <div class="emergency-note">
+      <span>📞 Barangay Hotline: (02) 1234 5678</span>
     </div>
-
-    <div id="description-group">
-      <label for="description" id="description-label">Description / Paglalarawan:</label>
-      <textarea id="description" name="description" placeholder="Describe the issue in detail... (Ilarawan ang problema sa detalye...)"></textarea>
-    </div>
-
-    <div id="location-group">
-      <label for="location" id="location-label">Location of Issue / Lokasyon ng Problema:</label>
-      <input type="text" id="location" name="location" placeholder="e.g. Near the barangay hall, Rizal St. (Hal. Malapit sa barangay hall, Rizal St.)">
-    </div>
-
-    <div id="photo-group">
-      <label for="photo" id="photo-label">Attach Photo (optional) / Maglakip ng Larawan (opsyonal):</label>
-      <input type="file" id="photo" name="photo" accept="image/*">
-    </div>
-
-    <hr id="divider-bottom">
-
-    <div id="form-actions">
-      <input type="submit" id="btn-submit" value="Submit Report / Ipasá ang Ulat">
-      <button id="btn-cancel" type="button" onclick="location.href='homepage.html'">Cancel / Kanselahin</button>
-    </div>
-
-  </form>
+    <div class="badge">Confidential Reporting · Data Privacy Compliant</div>
+    <div>Serbisyong Tapat, Barangay Sambayan</div>
+  </div>
+</div>
 
 </body>
+
+<script>
+// Utility: show/clear field errors
+function showError(fieldId, message) {
+  const field = document.getElementById(fieldId);
+  field.classList.add('field-error');
+  let errEl = field.parentElement.querySelector('.error-msg');
+  if (!errEl) {
+    errEl = document.createElement('div');
+    errEl.className = 'error-msg';
+    field.insertAdjacentElement('afterend', errEl);
+  }
+  errEl.textContent = message;
+}
+
+function clearError(fieldId) {
+  const field = document.getElementById(fieldId);
+  field.classList.remove('field-error');
+  const errEl = field.parentElement.querySelector('.error-msg');
+  if (errEl) errEl.remove();
+}
+
+function showToast(message) {
+  const existing = document.querySelector('.success-toast');
+  if (existing) existing.remove();
+  const toast = document.createElement('div');
+  toast.className = 'success-toast';
+  toast.innerHTML = '✅ ' + message;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3500);
+}
+
+// Character counter for text area
+const descField = document.getElementById('description');
+const descCounter = document.getElementById('desc-counter');
+const MAX_CHARS = 800;
+
+descField.addEventListener('input', () => {
+  const len = descField.value.length;
+  descCounter.textContent = len + ' / ' + MAX_CHARS;
+  descCounter.className = 'char-counter';
+  if (len > MAX_CHARS * 0.85) descCounter.classList.add('warn');
+  if (len >= MAX_CHARS) {
+    descCounter.classList.remove('warn');
+    descCounter.classList.add('danger');
+    descField.value = descField.value.slice(0, MAX_CHARS);
+    descCounter.textContent = MAX_CHARS + ' / ' + MAX_CHARS;
+  }
+});
+
+// Location validator
+function validateLocation(val) {
+  if (!val) return null;
+
+  val = val.trim();
+
+  if (val.length < 5)
+    return 'Please provide a more specific location / Pakiusap, magbigay ng mas tiyak na lokasyon';
+
+  if (!/[a-zA-Z]/.test(val))
+    return 'Please enter a valid address / Mangyaring magbigay ng wastong lokasyon';
+
+  if (/[^a-zA-Z0-9\s.,#\-']/.test(val))
+    return 'Special characters such as $, %, ^, @ are not allowed / Bawal ang mga espesyal na karakter tulad ng $, %, ^, @';
+
+  if (/(.)\1{4,}/.test(val))
+    return 'Please enter a valid address / Mangyaring magbigay ng wastong lokasyon';
+
+  // Must contain at least one space
+  if (!/\s/.test(val))
+    return 'Please enter a valid address / Mangyaring magbigay ng wastong lokasyon';
+
+  // Reject random uppercase strings
+  if (/^[A-Z]{6,}$/.test(val.replace(/[\s.-]/g, '')))
+    return 'Please enter a valid address / Mangyaring magbigay ng wastong lokasyon';
+
+  return null;
+}
+
+// Real-time blur validation
+document.getElementById('issue_level').addEventListener('change', function () {
+  if (this.value) clearError('issue_level');
+});
+
+document.getElementById('description').addEventListener('blur', function () {
+  const val = this.value.trim();
+  if (val && val.length < 20) {
+    showError('description', 'The description must be at least 20 characters / Ang paglalarawan ay dapat hindi bababa sa 20 karakter');
+  } else {
+    clearError('description');
+  }
+});
+
+document.getElementById('location').addEventListener('blur', function () {
+  const val = this.value.trim();
+  const error = validateLocation(val);
+  if (error) {
+    showError('location', error);
+  } else {
+    clearError('location');
+  }
+});
+
+document.getElementById('photo').addEventListener('change', function () {
+  const file = this.files[0];
+  if (!file) return;
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+  const maxSize = 5 * 1024 * 1024; // 5MB
+  if (!allowedTypes.includes(file.type)) {
+    showError('photo', 'Ang file ay dapat JPG, PNG, WEBP, o GIF lamang.');
+    this.value = '';
+  } else if (file.size > maxSize) {
+    showError('photo', 'Ang file ay sobra sa 5MB. Pumili ng mas maliit na imahe.');
+    this.value = '';
+  } else {
+    clearError('photo');
+  }
+});
+
+// Submit validation
+document.getElementById('barangayIssueForm').addEventListener('submit', function (e) {
+  e.preventDefault();
+  let isValid = true;
+
+  // Issue level required
+  const issueLevel = document.getElementById('issue_level');
+  if (!issueLevel.value) {
+    showError('issue_level', 'Please select the level of urgency of the issue / Pakiusap, piliin ang antas ng pagkamadalian ng isyu');
+    isValid = false;
+  } else {
+    clearError('issue_level');
+  }
+
+  // Description required and min length
+  const desc = document.getElementById('description').value.trim();
+  if (!desc) {
+    showError('description', 'Pakiusap, ilarawan ang isyu.');
+    isValid = false;
+  } else if (desc.length < 20) {
+    showError('description', 'The description must be at least 20 characters / Ang paglalarawan ay dapat hindi bababa sa 20 karakter');
+    isValid = false;
+  } else {
+    clearError('description');
+  }
+
+  // Location: optional but validate if filled
+  const loc = document.getElementById('location').value.trim();
+  const locError = validateLocation(loc);
+  if (locError) {
+    showError('location', locError);
+    isValid = false;
+  } else {
+    clearError('location');
+  }
+
+  if (!isValid) {
+    const firstErr = document.querySelector('.field-error');
+    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  showToast('Matagumpay na naipadala ang iyong ulat tungkol sa barangay!');
+  setTimeout(() => { this.submit(); }, 1500);
+});
+</script>
+
 </html>
