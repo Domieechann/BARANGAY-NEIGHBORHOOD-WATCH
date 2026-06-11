@@ -341,123 +341,66 @@
       outline: 3px solid #f4b942;
       outline-offset: 2px;
     }
-
-    /* validation styles */
-    .field-error {
-      border-color: #e53e3e !important;
-      box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.15) !important;
-    }
-
-    .error-msg {
-      color: #c53030;
-      font-size: 0.78rem;
-      font-weight: 600;
-      margin-top: 0.3rem;
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-      animation: fadeSlideUp 0.2s ease-out;
-    }
-
-    .error-msg::before {
-      content: "⚠";
-      font-size: 0.8rem;
-    }
-
-    .success-toast {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: #0b3b2f;
-      color: white;
-      padding: 1rem 1.5rem;
-      border-radius: 1rem;
-      font-size: 0.9rem;
-      font-weight: 600;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      animation: fadeSlideUp 0.3s ease-out;
-      border-left: 4px solid #f4b942;
-    }
-
-    .char-counter {
-      font-size: 0.73rem;
-      color: #8da396;
-      text-align: right;
-      margin-top: 0.25rem;
-      transition: color 0.2s;
-    }
-
-    .char-counter.warn { color: #d97706; }
-    .char-counter.danger { color: #c53030; font-weight: 700; }
   </style>
 </head>
 <body>
 
 <div class="portal-container">
+  
   <div class="portal-header">
     <div class="back-link-wrapper">
-      <a href="homepage.html" class="back-link">← Go Back</a>
+      <a href="homepage.html" class="back-link">← Go Back / Bumalik</a>
     </div>
     <div class="header-title-section">
-      <h2>REPORT AN ISSUE ABOUT THE BARANGAY</h2>
-      <div class="header-sub">Fill out the form below to submit a barangay issue report.</div>
+      <h2>REPORT AN ISSUE ABOUT THE BARANGAY / MAG-ULAT NG ISYU SA BARANGAY</h2>
+      <div class="header-sub">Fill out the form below to submit a barangay issue report. / Punan ang form sa ibaba upang magsumite ng ulat ng isyu sa barangay.</div>
     </div>
   </div>
   <div class="elegant-divider"></div>
 
   <div class="form-container">
-    <form id="barangayIssueForm" action="homepage.html" method="get" class="issue-form" novalidate>
+    <form action="homepage.html" method="get" class="issue-form">
 
-      <!-- Type of issue - DROPDOWN instead of radio buttons -->
       <div class="form-group">
         <div class="form-label">
-          TYPE OF ISSUE:
+          TYPE OF ISSUE / URI NG ISYU:
         </div>
         <select id="issue_level" name="issue_level" required>
-          <option value="">-- Select Priority Level --</option>
-          <option value="normal">Normal - Minor, non-urgent concern</option>
-          <option value="medium">Medium - Needs attention soon</option>
-          <option value="critical">Critical - Urgent, requires immediate action</option>
+          <option value="">-- Select Priority Level / Piliin ang Antas ng Priyoridad --</option>
+          <option value="normal">Normal - Minor, non-urgent concern / Karaniwan - Maliit, hindi urhenteng alalahanin</option>
+          <option value="medium">Medium - Needs attention soon / Katamtaman - Nangangailangan ng pansin sa lalong madaling panahon</option>
+          <option value="critical">Critical - Urgent, requires immediate action / Kritikal - Urhente, nangangailangan ng agarang aksyon</option>
         </select>
-        <div class="helper-text">Select the urgency level of your concern.</div>
+        <div class="helper-text">Select the urgency level of your concern. / Piliin ang antas ng urgensya ng iyong alalahanin.</div>
       </div>
 
-      <!-- Description box -->
       <div class="form-group">
         <div class="form-label">
-          DESCRIPTION:
+          DESCRIPTION / PAGLALARAWAN:
         </div>
-        <textarea id="description" name="description" rows="5" placeholder="Describe the issue in detail... (e.g., what happened, since when, how it affects the community)"></textarea>
-        <div class="char-counter" id="desc-counter">0 / 800</div>
-        <div class="helper-text">Provide as much detail as possible for faster action.</div>
+        <textarea id="description" name="description" rows="5" placeholder="Describe the issue in detail... (e.g., what happened, since when, how it affects the community) / Ilarawan ang isyu nang detalyado... (hal., ano ang nangyari, kailan pa, paano ito nakaaapekto sa komunidad)"></textarea>
+        <div class="helper-text">Provide as much detail as possible for faster action. / Magbigay ng mas maraming detalye hangga't maaari para sa mas mabilis na aksyon.</div>
       </div>
 
-      <!-- Location of the issue -->
       <div class="form-group">
         <div class="form-label">
-          LOCATION OF ISSUE:
+          LOCATION OF ISSUE / LOKASYON NG ISYU:
         </div>
-        <input type="text" id="location" name="location" placeholder="e.g. Near the barangay hall, Rizal St., Purok 3">
-        <div class="helper-text">Exact street or landmark helps our team respond quickly.</div>
+        <input type="text" id="location" name="location" placeholder="e.g. Near the barangay hall, Rizal St., Purok 3 / hal. Malapit sa barangay hall, Rizal St., Purok 3">
+        <div class="helper-text">Exact street or landmark helps our team respond quickly. / Ang tumpak na kalye o palatandaan ay tumutulong sa aming koponan na tumugon nang mabilis.</div>
       </div>
 
-      <!-- Optional photo upload -->
       <div class="form-group">
         <div class="form-label">
-          ATTACH PHOTO (optional):
+          ATTACH PHOTO (optional) / MAGLAKIP NG LITRATO (opsyonal):
         </div>
         <input type="file" id="photo" name="photo" accept="image/*">
-        <div class="helper-text">Upload a clear image (JPG, PNG) — max 5MB (if applicable).</div>
+        <div class="helper-text">Upload a clear image (JPG, PNG) — max 5MB (if applicable). / Mag-upload ng malinaw na larawan (JPG, PNG) — max 5MB (kung naaangkop).</div>
       </div>
 
-      <!-- Action Buttons -->
       <div class="form-actions">
-        <button type="submit" class="btn-submit">Submit Report</button>
-        <a href="homepage.html" class="btn-cancel">Cancel</a>
+        <button type="submit" class="btn-submit">Submit Report / Isumite ang Ulat</button>
+        <a href="homepage.html" class="btn-cancel">Cancel / Kanselahin</a>
       </div>
     </form>
   </div>
@@ -466,176 +409,10 @@
     <div class="emergency-note">
       <span>📞 Barangay Hotline: (02) 1234 5678</span>
     </div>
-    <div class="badge">Confidential Reporting · Data Privacy Compliant</div>
+    <div class="badge">Confidential Reporting · Data Privacy Compliant / Ligtas na Pag-uulat · Alinsunod sa Privacy ng Datos</div>
     <div>Serbisyong Tapat, Barangay Sambayan</div>
   </div>
 </div>
 
 </body>
-
-<script>
-// Utility: show/clear field errors
-function showError(fieldId, message) {
-  const field = document.getElementById(fieldId);
-  field.classList.add('field-error');
-  let errEl = field.parentElement.querySelector('.error-msg');
-  if (!errEl) {
-    errEl = document.createElement('div');
-    errEl.className = 'error-msg';
-    field.insertAdjacentElement('afterend', errEl);
-  }
-  errEl.textContent = message;
-}
-
-function clearError(fieldId) {
-  const field = document.getElementById(fieldId);
-  field.classList.remove('field-error');
-  const errEl = field.parentElement.querySelector('.error-msg');
-  if (errEl) errEl.remove();
-}
-
-function showToast(message) {
-  const existing = document.querySelector('.success-toast');
-  if (existing) existing.remove();
-  const toast = document.createElement('div');
-  toast.className = 'success-toast';
-  toast.innerHTML = '✅ ' + message;
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 3500);
-}
-
-// Character counter for text area
-const descField = document.getElementById('description');
-const descCounter = document.getElementById('desc-counter');
-const MAX_CHARS = 800;
-
-descField.addEventListener('input', () => {
-  const len = descField.value.length;
-  descCounter.textContent = len + ' / ' + MAX_CHARS;
-  descCounter.className = 'char-counter';
-  if (len > MAX_CHARS * 0.85) descCounter.classList.add('warn');
-  if (len >= MAX_CHARS) {
-    descCounter.classList.remove('warn');
-    descCounter.classList.add('danger');
-    descField.value = descField.value.slice(0, MAX_CHARS);
-    descCounter.textContent = MAX_CHARS + ' / ' + MAX_CHARS;
-  }
-});
-
-// Location validator
-function validateLocation(val) {
-  if (!val) return null;
-
-  val = val.trim();
-
-  if (val.length < 5)
-    return 'Please provide a more specific location / Pakiusap, magbigay ng mas tiyak na lokasyon';
-
-  if (!/[a-zA-Z]/.test(val))
-    return 'Please enter a valid address / Mangyaring magbigay ng wastong lokasyon';
-
-  if (/[^a-zA-Z0-9\s.,#\-']/.test(val))
-    return 'Special characters such as $, %, ^, @ are not allowed / Bawal ang mga espesyal na karakter tulad ng $, %, ^, @';
-
-  if (/(.)\1{4,}/.test(val))
-    return 'Please enter a valid address / Mangyaring magbigay ng wastong lokasyon';
-
-  // Must contain at least one space
-  if (!/\s/.test(val))
-    return 'Please enter a valid address / Mangyaring magbigay ng wastong lokasyon';
-
-  // Reject random uppercase strings
-  if (/^[A-Z]{6,}$/.test(val.replace(/[\s.-]/g, '')))
-    return 'Please enter a valid address / Mangyaring magbigay ng wastong lokasyon';
-
-  return null;
-}
-
-// Real-time blur validation
-document.getElementById('issue_level').addEventListener('change', function () {
-  if (this.value) clearError('issue_level');
-});
-
-document.getElementById('description').addEventListener('blur', function () {
-  const val = this.value.trim();
-  if (val && val.length < 20) {
-    showError('description', 'The description must be at least 20 characters / Ang paglalarawan ay dapat hindi bababa sa 20 karakter');
-  } else {
-    clearError('description');
-  }
-});
-
-document.getElementById('location').addEventListener('blur', function () {
-  const val = this.value.trim();
-  const error = validateLocation(val);
-  if (error) {
-    showError('location', error);
-  } else {
-    clearError('location');
-  }
-});
-
-document.getElementById('photo').addEventListener('change', function () {
-  const file = this.files[0];
-  if (!file) return;
-  const allowedTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-  const maxSize = 5 * 1024 * 1024; // 5MB
-  if (!allowedTypes.includes(file.type)) {
-    showError('photo', 'Ang file ay dapat JPG, PNG, WEBP, o GIF lamang.');
-    this.value = '';
-  } else if (file.size > maxSize) {
-    showError('photo', 'Ang file ay sobra sa 5MB. Pumili ng mas maliit na imahe.');
-    this.value = '';
-  } else {
-    clearError('photo');
-  }
-});
-
-// Submit validation
-document.getElementById('barangayIssueForm').addEventListener('submit', function (e) {
-  e.preventDefault();
-  let isValid = true;
-
-  // Issue level required
-  const issueLevel = document.getElementById('issue_level');
-  if (!issueLevel.value) {
-    showError('issue_level', 'Please select the level of urgency of the issue / Pakiusap, piliin ang antas ng pagkamadalian ng isyu');
-    isValid = false;
-  } else {
-    clearError('issue_level');
-  }
-
-  // Description required and min length
-  const desc = document.getElementById('description').value.trim();
-  if (!desc) {
-    showError('description', 'Pakiusap, ilarawan ang isyu.');
-    isValid = false;
-  } else if (desc.length < 20) {
-    showError('description', 'The description must be at least 20 characters / Ang paglalarawan ay dapat hindi bababa sa 20 karakter');
-    isValid = false;
-  } else {
-    clearError('description');
-  }
-
-  // Location: optional but validate if filled
-  const loc = document.getElementById('location').value.trim();
-  const locError = validateLocation(loc);
-  if (locError) {
-    showError('location', locError);
-    isValid = false;
-  } else {
-    clearError('location');
-  }
-
-  if (!isValid) {
-    const firstErr = document.querySelector('.field-error');
-    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    return;
-  }
-
-  showToast('Matagumpay na naipadala ang iyong ulat tungkol sa barangay!');
-  setTimeout(() => { this.submit(); }, 1500);
-});
-</script>
-
 </html>
