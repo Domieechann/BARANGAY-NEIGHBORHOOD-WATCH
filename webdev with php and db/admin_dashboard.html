@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Super Admin Dashboard | Bantay Barangay</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: linear-gradient(145deg, #eef2f7 0%, #d9e2ec 100%);
+      font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+      padding: 1.5rem;
+      min-height: 100vh;
+    }
+
+    .admin-container { max-width: 1400px; margin: 0 auto; }
+
+    .admin-header {
+      background: #020353;
+      background-image: radial-gradient(circle at 10% 30%, rgba(60, 130, 110, 0.2) 2%, transparent 2.5%);
+      background-size: 40px 40px;
+      border-radius: 1.5rem;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      border-bottom: 4px solid #f4b942;
+    }
+
+    .admin-header h1 { color: white; font-size: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
+
+    .admin-info { display: flex; align-items: center; gap: 1rem; }
+
+    .admin-badge {
+      background: #f4b942;
+      color: #0b3b2f;
+      padding: 0.3rem 1rem;
+      border-radius: 2rem;
+      font-weight: bold;
+      font-size: 0.8rem;
+    }
+
+    .logout-btn {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      transition: 0.2s;
+      font-family: inherit;
+    }
+
+    .logout-btn:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-1px); }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 1.2rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      border-left: 5px solid #f4b942;
+      transition: transform 0.2s;
+    }
+
+    .stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); }
+    .stat-card h3 { color: #6b8b7e; font-size: 0.85rem; margin-bottom: 0.5rem; letter-spacing: 0.5px; }
+    .stat-number { font-size: 2.5rem; font-weight: 700; color: #0b3b2f; }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .admin-card {
+      background: white;
+      border-radius: 1.2rem;
+      padding: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s;
+    }
+
+    .admin-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); }
+
+    .admin-card h2 {
+      color: #0b3b2f;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #f4b942;
+      display: inline-block;
+    }
+
+    .report-list { list-style: none; max-height: 350px; overflow-y: auto; }
+
+    .report-item {
+      padding: 0.8rem;
+      border-bottom: 1px solid #e6edea;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .report-item:last-child { border-bottom: none; }
+    .report-info { flex: 1; }
+    .report-title { font-weight: 600; color: #1a2e28; font-size: 0.85rem; }
+    .report-desc { font-size: 0.75rem; color: #4a6358; margin-top: 0.15rem; }
+    .report-meta { font-size: 0.7rem; color: #8da396; margin-top: 0.2rem; }
+
+    .status-select {
+      border: 1.5px solid #e6edea;
+      border-radius: 1.5rem;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.72rem;
+      font-weight: bold;
+      cursor: pointer;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .status-select:focus { border-color: #f4b942; }
+    .status-select.sel-pending  { background: #fff3e0; color: #c97e0a; }
+    .status-select.sel-progress { background: #e3f0fc; color: #1a6bbf; }
+    .status-select.sel-review   { background: #f3e8ff; color: #7c3aed; }
+    .status-select.sel-resolved { background: #e1f7e9; color: #1e7b48; }
+
+    .resident-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+
+    .resident-table th,
+    .resident-table td {
+      padding: 0.7rem 0.5rem;
+      text-align: left;
+      border-bottom: 1px solid #e6edea;
+    }
+
+    .resident-table th { color: #0b3b2f; font-weight: 700; }
+
+    .empty-state { text-align: center; color: #8da396; padding: 2rem; font-size: 0.85rem; }
+
+    .footer-note { margin-top: 2rem; text-align: center; color: #8da396; font-size: 0.75rem; }
+
+    @media (max-width: 768px) {
+      body { padding: 1rem; }
+      .content-grid { grid-template-columns: 1fr; }
+      .admin-header h1 { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="admin-container">
+    <div class="admin-header">
+      <h1>🛡️ Super Admin Dashboard | Bantay Barangay</h1>
+      <div class="admin-info">
+        <span class="admin-badge">👑 SUPER ADMIN</span>
+        <button class="logout-btn" onclick="handleLogout()">🚪 Logout</button>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>📋 TOTAL REPORTS</h3>
+        <div class="stat-number" id="totalReports">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>⏳ PENDING REPORTS</h3>
+        <div class="stat-number" id="pendingReports">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>✅ RESOLVED REPORTS</h3>
+        <div class="stat-number" id="resolvedReports">0</div>
+      </div>
+      <div class="stat-card">
+        <h3>👥 VERIFIED RESIDENTS</h3>
+        <div class="stat-number" id="totalResidents">0</div>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <div class="admin-card">
+        <h2>📌 Recent Reports</h2>
+        <ul class="report-list" id="recentReports">
+          <li class="empty-state">Loading reports...</li>
+        </ul>
+      </div>
+
+      <div class="admin-card">
+        <h2>👪 Resident Directory</h2>
+        <div style="overflow-x: auto;">
+          <table class="resident-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="residentList">
+              <tr><td colspan="3" class="empty-state">Loading residents...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      🕊️ Bantay Barangay Admin Portal | Serbisyong Tapat, Barangay Sambayan
+    </div>
+  </div>
+
+  <script>
+    // ── SESSION CHECK ─────────────────────────────────────────────────────────
+    fetch('check_session.php')
+      .then(res => res.json())
+      .then(data => {
+        if (!data.loggedIn) {
+          window.location.href = 'admin-login.html';
+        } else {
+          loadReports();
+          loadResidents();
+        }
+      });
+
+    // ── LOGOUT ────────────────────────────────────────────────────────────────
+    function handleLogout() {
+      window.location.href = 'admin_logout.php';
+    }
+
+    // ── STATUS DROPDOWN COLOR UPDATE ─────────────────────────────────────────
+    function updateSelectColor(sel) {
+      sel.className = 'status-select';
+      const map = {
+        'Pending':      'sel-pending',
+        'In Progress':  'sel-progress',
+        'Under Review': 'sel-review',
+        'Resolved':     'sel-resolved'
+      };
+      sel.classList.add(map[sel.value] || '');
+      updateStats();
+    }
+
+    // ── STATS COUNT ───────────────────────────────────────────────────────────
+    function updateStats() {
+      const selects = document.querySelectorAll('#recentReports .status-select');
+      let total = selects.length;
+      let pending = 0, resolved = 0;
+      selects.forEach(s => {
+        if (s.value === 'Pending')  pending++;
+        if (s.value === 'Resolved') resolved++;
+      });
+      document.getElementById('totalReports').textContent   = total;
+      document.getElementById('pendingReports').textContent  = pending;
+      document.getElementById('resolvedReports').textContent = resolved;
+    }
+
+    // ── LOAD REPORTS ──────────────────────────────────────────────────────────
+    function loadReports() {
+      fetch('get_reports.php')
+        .then(res => res.json())
+        .then(reports => {
+          const list = document.getElementById('recentReports');
+          if (!reports.length) {
+            list.innerHTML = '<li class="empty-state">Walang reports pa.</li>';
+            return;
+          }
+          list.innerHTML = reports.map(r => {
+            const statusClass = {
+              'Pending':      'sel-pending',
+              'In Progress':  'sel-progress',
+              'Under Review': 'sel-review',
+              'Resolved':     'sel-resolved'
+            }[r.status] || 'sel-pending';
+
+            return `
+              <li class="report-item">
+                <div class="report-info">
+                  <div class="report-title">${r.report_type}</div>
+                  <div class="report-desc">${r.description}</div>
+                  <div class="report-meta">${r.location} · ${r.created_at}</div>
+                </div>
+                <select class="status-select ${statusClass}" data-id="${r.id}" onchange="updateSelectColor(this); saveStatus(this)">
+                  <option ${r.status === 'Pending'      ? 'selected' : ''}>Pending</option>
+                  <option ${r.status === 'In Progress'  ? 'selected' : ''}>In Progress</option>
+                  <option ${r.status === 'Under Review' ? 'selected' : ''}>Under Review</option>
+                  <option ${r.status === 'Resolved'     ? 'selected' : ''}>Resolved</option>
+                </select>
+              </li>`;
+          }).join('');
+          updateStats();
+        })
+        .catch(() => {
+          document.getElementById('recentReports').innerHTML =
+            '<li class="empty-state">Hindi ma-load ang reports.</li>';
+        });
+    }
+
+    // ── LOAD RESIDENTS ────────────────────────────────────────────────────────
+    function loadResidents() {
+      fetch('get_residents.php')
+        .then(res => res.json())
+        .then(residents => {
+          const tbody = document.getElementById('residentList');
+          if (!residents.length) {
+            tbody.innerHTML = '<tr><td colspan="3" class="empty-state">Walang residents pa.</td></tr>';
+            return;
+          }
+          tbody.innerHTML = residents.map(r => `
+            <tr>
+              <td>${r.full_name}</td>
+              <td>${r.address}</td>
+              <td>${r.status}</td>
+            </tr>`).join('');
+          document.getElementById('totalResidents').textContent =
+            residents.filter(r => r.status === 'Verified').length;
+        })
+        .catch(() => {
+          document.getElementById('residentList').innerHTML =
+            '<tr><td colspan="3" class="empty-state">Hindi ma-load ang residents.</td></tr>';
+        });
+    }
+
+    // ── SAVE STATUS SA DB (hindi nagde-delete, update lang) ───────────────────
+    function saveStatus(sel) {
+      const id     = sel.dataset.id;
+      const status = sel.value;
+      fetch('update_status.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `id=${id}&status=${encodeURIComponent(status)}`
+      });
+    }
+  </script>
+</body>
+</html>
