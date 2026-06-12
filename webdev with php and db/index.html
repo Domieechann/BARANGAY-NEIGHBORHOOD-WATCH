@@ -1,334 +1,411 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Bantay Barangay | Official Welcome Portal</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bantay Barangay | Official Welcome Portal</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI', Roboto, 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+    line-height:1.5;
+    height:100vh;
+    width:100vw;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    position:relative;
+}
+
+.bg-container{
+    position:absolute;
+    inset:0;
+    z-index:-2;
+}
+
+.bg-container img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.bg-tint{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        135deg,
+        rgba(2,3,83,.90) 0%,
+        rgba(12,68,124,.85) 100%
+    );
+    z-index:-1;
+}
+
+.gov-bar{
+    background:#0b1120;
+    color:#f8fafc;
+    font-size:.75rem;
+    padding:.5rem 2rem;
+    font-weight:600;
+    letter-spacing:.5px;
+    border-bottom:1px solid rgba(255,255,255,.15);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.gov-identity{
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+}
+
+.main-header{
+    background:#fff;
+    padding:1rem 2rem;
+    border-bottom:4px solid #f4b942;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 4px 20px rgba(0,0,0,.2);
+}
+
+.brand-section{
+    display:flex;
+    align-items:center;
+    gap:1.25rem;
+}
+
+.logo-badge{
+    width:50px;
+    height:50px;
+    background:#020353;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.5rem;
+    border:2px solid #f4b942;
+}
+
+.title-block h1{
+    color:#020353;
+    font-size:1.4rem;
+    font-weight:800;
+}
+
+.title-block p{
+    color:#64748b;
+    font-size:.75rem;
+    font-weight:600;
+    text-transform:uppercase;
+}
+
+.admin-header-btn{
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+    background:#dc2626;
+    color:#fff;
+    border:1.5px solid #dc2626;
+    padding:.6rem 1.2rem;
+    border-radius:.5rem;
+    text-decoration:none;
+    font: size 42px;;
+    font-weight:700;
+}
+
+.admin-header-btn:hover{
+    background:#b91c1c;
+}
+
+.portal-workspace{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:2rem;
+    text-align:center;
+}
+
+.hero-announcement{
+    margin-bottom:2rem;
+    max-width:700px;
+}
+
+.hero-announcement h2{
+    color:#fff;
+    font-size:2.2rem;
+    font-weight:800;
+}
+
+.hero-announcement p{
+    color:#cbd5e1;
+    font-size:1.1rem;
+}
+
+.services-grid{
+    width:100%;
+    max-width:700px;
+}
+
+.service-card-anchor{
+    width:100%;
+    background:#fff;
+    border-radius:1rem;
+    box-shadow:0 20px 40px rgba(0,0,0,.35);
+    padding:2rem;
+    display:flex;
+    gap:1.5rem;
+    align-items:flex-start;
+    border:2px solid #b5d4f4;
+    border-top:6px solid #0c447c;
+}
+
+.service-card-anchor:hover{
+    border-color:#0c447c;
+    box-shadow:0 30px 50px rgba(0,0,0,.5);
+}
+
+.icon-container{
+    font-size:2.5rem;
+    background:#f1f5f9;
+    color:#0c447c;
+    width:64px;
+    height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:.5rem;
+}
+
+.text-container{
+    flex:1;
+}
+
+.card-title{
+    font-size:1.3rem;
+    font-weight:700;
+    color:#01023a;
+}
+
+.card-title .tl{
+    display:block;
+    font-size:.75em;
+    font-style:italic;
+    color:#1e7b48;
+}
+
+.card-desc{
+    font-size:.88rem;
+    color:#475569;
+    margin-top:.5rem;
+}
+
+.portal-buttons{
+    margin-top:1.5rem;
+    display:flex;
+    align-items:center;
+    gap:1rem;
+}
+
+.login-btn,
+.register-btn{
+    flex:1;
+    text-align:center;
+    text-decoration:none;
+    padding:.9rem;
+    border-radius:.6rem;
+    font-weight:700;
+    transition:.3s;
+}
+
+.login-btn{
+    background:#fff;
+    border:2px solid #2563eb;
+    color:#2563eb;
+}
+
+.login-btn:hover{
+    background:#2563eb;
+    color:#fff;
+}
+
+.register-btn{
+    background:#2563eb;
+    border:2px solid #2563eb;
+    color:#fff;
+}
+
+.register-btn:hover{
+    background:#1d4ed8;
+}
+
+.divider-text{
+    font-weight:700;
+    color:#64748b;
+}
+
+.gov-footer{
+    background:#01023a;
+    color:#94a3b8;
+    font-size:.8rem;
+    padding:1rem 2rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.security-badge{
+    background:rgba(255,255,255,.1);
+    color:#f4b942;
+    padding:.2rem .6rem;
+    border-radius:4px;
+}
+
+.footer-left{
+    display:flex;
+    gap:1rem;
+    align-items:center;
+}
+
+@media(max-width:640px){
+
+    body{
+        overflow-y:auto;
     }
 
-    body {
-      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, -apple-system, sans-serif;
-      line-height: 1.5;
-      height: 100vh;
-      width: 100vw;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      position: relative;
+    .main-header{
+        flex-direction:column;
+        gap:1rem;
+        text-align:center;
     }
 
-    .bg-container {
-      position: absolute;
-      inset: 0;
-      z-index: -2;
+    .service-card-anchor{
+        flex-direction:column;
+        text-align:center;
     }
 
-    .bg-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+    .portal-buttons{
+        flex-direction:column;
     }
 
-    .bg-tint {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(2, 3, 83, 0.90) 0%, rgba(12, 68, 124, 0.85) 100%);
-      z-index: -1;
+    .divider-text{
+        display:none;
     }
 
-    .gov-bar {
-      background: #0b1120;
-      color: #f8fafc;
-      font-size: 0.75rem;
-      padding: 0.5rem 2rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    .login-btn,
+    .register-btn{
+        width:100%;
     }
-
-    .gov-identity {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .main-header {
-      background: #ffffff;
-      padding: 1rem 2rem;
-      border-bottom: 4px solid #f4b942;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .brand-section {
-      display: flex;
-      align-items: center;
-      gap: 1.25rem;
-    }
-
-    .logo-badge {
-      width: 50px;
-      height: 50px;
-      background: #020353;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      border: 2px solid #f4b942;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .title-block h1 {
-      color: #020353;
-      font-size: 1.4rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
-
-    .title-block p {
-      color: #64748b;
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .admin-header-btn {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: #dc2626;
-      color: #ffffff;
-      border: 1.5px solid #dc2626;
-      padding: 0.6rem 1.2rem;
-      border-radius: 0.5rem;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 700;
-      transition: all 0.2s ease;
-    }
-
-    .admin-header-btn:hover {
-      background: #b91c1c;
-      border-color: #b91c1c;
-      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
-    }
-
-    .portal-workspace {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 2rem;
-      text-align: center;
-    }
-
-    .hero-announcement {
-      margin-bottom: 2rem;
-      max-width: 700px;
-      animation: fadeIn 0.6s ease-out;
-    }
-
-    .hero-announcement h2 {
-      color: #ffffff;
-      font-size: 2.2rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      margin-bottom: 0.5rem;
-    }
-
-    .hero-announcement p {
-      color: #cbd5e1;
-      font-size: 1.1rem;
-    }
-
-    .services-grid {
-      display: flex;
-      width: 100%;
-      max-width: 550px;
-      justify-content: center;
-      animation: fadeIn 0.8s ease-out;
-    }
-
-    .service-card-anchor {
-      width: 100%;
-      background: #ffffff;
-      border-radius: 0.75rem;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
-      padding: 2rem;
-      text-decoration: none;
-      text-align: left;
-      display: flex;
-      gap: 1.5rem;
-      align-items: center;
-      border: 2px solid #b5d4f4;
-      border-top: 6px solid #0c447c;
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .icon-container {
-      font-size: 2.5rem;
-      background: #f1f5f9;
-      color: #0c447c;
-      width: 64px;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 0.5rem;
-      transition: all 0.2s ease;
-    }
-
-    .text-container {
-      flex: 1;
-    }
-
-    .card-title {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: #01023a;
-    }
-
-    .card-title .tl {
-      display: block;
-      font-size: 0.75em;
-      font-weight: 500;
-      font-style: italic;
-      color: #1e7b48;
-      margin-top: 0.1rem;
-    }
-
-    .card-desc {
-      font-size: 0.88rem;
-      color: #475569;
-      margin-top: 0.4rem;
-      line-height: 1.4;
-    }
-
-    .service-card-anchor:hover {
-      transform: translateY(-4px);
-      border-color: #0c447c;
-      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5);
-    }
-
-    .service-card-anchor:hover .icon-container {
-      background: #020353;
-      color: #ffffff !important;
-    }
-
-    .gov-footer {
-      background: #01023a;
-      color: #94a3b8;
-      font-size: 0.8rem;
-      padding: 1rem 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-left {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-
-    .security-badge {
-      background: rgba(255, 255, 255, 0.1);
-      color: #f4b942;
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @media (max-width: 640px) {
-      body { overflow-y: auto; height: auto; min-height: 100vh; }
-      .main-header { flex-direction: column; gap: 1rem; text-align: center; padding: 1.5rem 1rem; }
-      .portal-workspace { padding: 1.5rem 1rem; }
-      .service-card-anchor { flex-direction: column; text-align: center; padding: 1.5rem; }
-    }
-  </style>
+}
+</style>
 </head>
+
 <body>
 
-  <div class="bg-container">
+<div class="bg-container">
     <div class="bg-tint"></div>
-    <img src="https://thumbs.dreamstime.com/b/barangay-east-rembo-makati-city-aerial-view-276301378.jpg" alt="Official Barangay East Rembo Makati City Grid Frame Background View">
-  </div>
+    <img src="https://thumbs.dreamstime.com/b/barangay-east-rembo-makati-city-aerial-view-276301378.jpg" alt="">
+</div>
 
-  <div class="gov-bar">
+<div class="gov-bar">
     <div class="gov-identity">
-      <span>REPUBLIC OF THE PHILIPPINES</span>
-      <span style="color: rgba(255,255,255,0.3);">|</span>
-      <span style="color: #94a3b8;">OFFICIAL BARANGAY PORTAL</span>
+        <span>REPUBLIC OF THE PHILIPPINES</span>
+        <span>|</span>
+        <span style="color:#94a3b8;">OFFICIAL BARANGAY PORTAL</span>
     </div>
+
     <div>STRICT SECURE ACCESS PROTOCOL</div>
-  </div>
+</div>
 
-  <header class="main-header">
+<header class="main-header">
+
     <div class="brand-section">
-      <div class="logo-badge" aria-hidden="true">🛡️</div>
-      <div class="title-block">
-        <h1>Bantay Barangay Portal</h1>
-        <p>Public Local Infrastructure Gate</p>
-      </div>
-    </div>
-    
-    <a href="admin-login.html" id="adminHeaderBtn" class="admin-header-btn">
-      <span>💼 Administrative Portal</span>
-    </a>
-  </header>
 
-  <main class="portal-workspace">
-    
+        <div class="logo-badge">
+            🛡️
+        </div>
+
+        <div class="title-block">
+            <h1>Bantay Barangay Portal</h1>
+            <p>Public Local Infrastructure Gate</p>
+        </div>
+
+    </div>
+
+    <a href="admin-login.html" class="admin-header-btn">
+         Administrative Portal
+    </a>
+
+</header>
+
+<main class="portal-workspace">
+
     <div class="hero-announcement">
-      <h2>Official Citizen Gateway</h2>
-      <p>Secure operations clearing house for public filing records, neighborhood incident management logs, and localized tracking updates.</p>
+        <h2>Official Citizen Gateway</h2>
+        <p>
+            Secure operations clearing house for public filing records,
+            neighborhood incident management logs, and localized tracking updates.
+        </p>
     </div>
 
     <div class="services-grid">
-      
-      <a href="login.html" class="service-card-anchor">
-        <div class="icon-container">🏘️</div>
-        <div class="text-container">
-          <div class="card-title">
-            Citizen Services Portal
-            <span class="tl">Portal ng Mamamayan</span>
-          </div>
-          <div class="card-desc">File confidential grievance records, report systemic local issues, and query workflow tracking history.</div>
+
+        <div class="service-card-anchor">
+
+            <div class="text-container">
+
+                <div class="card-title">
+                    Citizen Services Portal
+                    <span class="tl">Portal ng Mamamayan</span>
+                </div>
+
+                <div class="card-desc">
+                    File confidential grievance records, report systemic local issues,
+                    and query workflow tracking history.
+                </div>
+
+                <div class="portal-buttons">
+
+                    <a href="login.html" class="login-btn">
+                        👤 Log In
+                    </a>
+
+                    <span class="divider-text">or</span>
+
+                    <a href="registration.html" class="register-btn">
+                        👥 Register
+                    </a>
+
+                </div>
+
+            </div>
+
         </div>
-      </a>
 
     </div>
 
-  </main>
+</main>
 
-  <footer class="gov-footer">
+<footer class="gov-footer">
+
     <div class="footer-left">
-      <span>🕊️ Serbisyong Tapat, Barangay Sambayan</span>
-      <span class="security-badge">Data Privacy Compliant</span>
+        <span> Serbisyong Tapat, Barangay Sambayan</span>
+        <span class="security-badge">Data Privacy Compliant</span>
     </div>
-    <div>&copy; 2026 Bantay Barangay. All Rights Reserved.</div>
-  </footer>
+
+    <div>
+        &copy; 2026 Bantay Barangay. All Rights Reserved.
+    </div>
+
+</footer>
 
 </body>
 </html>

@@ -8,341 +8,575 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      background: linear-gradient(145deg, #eef2f7 0%, #d9e2ec 100%);
+      background: #eef2f7;
       font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
       padding: 1.5rem;
       min-height: 100vh;
     }
 
-    .admin-container { max-width: 1400px; margin: 0 auto; }
+    .dash { max-width: 1400px; margin: 0 auto; }
 
-    .admin-header {
+    /* ── TOPBAR ── */
+    .topbar {
       background: #020353;
-      background-image: radial-gradient(circle at 10% 30%, rgba(60, 130, 110, 0.2) 2%, transparent 2.5%);
-      background-size: 40px 40px;
-      border-radius: 1.5rem;
-      padding: 1.2rem 2rem;
+      border-radius: 14px;
+      padding: 1rem 1.5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border-bottom: 3px solid #f4b942;
+      margin-bottom: 1.5rem;
       flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-      border-bottom: 4px solid #f4b942;
+      gap: 0.75rem;
     }
-
-    .admin-header h1 { color: white; font-size: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
-
-    .admin-info { display: flex; align-items: center; gap: 1rem; }
-
-    .admin-badge {
-      background: #f4b942;
-      color: #0b3b2f;
-      padding: 0.3rem 1rem;
-      border-radius: 2rem;
-      font-weight: bold;
-      font-size: 0.8rem;
-    }
-
-    .logout-btn {
-      background: rgba(255, 255, 255, 0.2);
+    .topbar-title {
       color: white;
-      border: none;
-      padding: 0.5rem 1.2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .topbar-right { display: flex; align-items: center; gap: 10px; }
+    .badge-admin {
+      background: #f4b942;
+      color: #3a2200;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 14px;
       border-radius: 2rem;
+    }
+    .btn-logout {
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 6px 16px;
+      border-radius: 2rem;
+      font-size: 0.8rem;
       cursor: pointer;
-      transition: 0.2s;
       font-family: inherit;
+      transition: background 0.15s;
     }
+    .btn-logout:hover { background: rgba(255,255,255,0.28); }
 
-    .logout-btn:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-1px); }
-
-    .stats-grid {
+    /* ── STATS ── */
+    .stats-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
     }
-
     .stat-card {
       background: white;
-      border-radius: 1.2rem;
-      padding: 1.5rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-      border-left: 5px solid #f4b942;
-      transition: transform 0.2s;
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      border-top: 3px solid #f4b942;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      transition: transform 0.15s, box-shadow 0.15s;
     }
+    .stat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+    .stat-label { font-size: 0.72rem; color: #5a7a6e; font-weight: 600; letter-spacing: 0.4px; margin-bottom: 6px; text-transform: uppercase; }
+    .stat-num { font-size: 2rem; font-weight: 700; color: #0b3b2f; }
 
-    .stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); }
-    .stat-card h3 { color: #6b8b7e; font-size: 0.85rem; margin-bottom: 0.5rem; letter-spacing: 0.5px; }
-    .stat-number { font-size: 2.5rem; font-weight: 700; color: #0b3b2f; }
-
-    .content-grid {
+    /* ── CONTENT GRID ── */
+    .content-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 1.25rem;
     }
-
-    .admin-card {
+    .panel {
       background: white;
-      border-radius: 1.2rem;
-      padding: 1.5rem;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-      transition: transform 0.2s;
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      overflow: hidden;
+      transition: box-shadow 0.15s;
     }
-
-    .admin-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); }
-
-    .admin-card h2 {
+    .panel:hover { box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+    .panel-title {
+      font-size: 1rem;
+      font-weight: 700;
       color: #0b3b2f;
-      font-size: 1.2rem;
       margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid #f4b942;
-      display: inline-block;
+      padding-bottom: 8px;
+      border-bottom: 2.5px solid #f4b942;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
-    .report-list { list-style: none; max-height: 350px; overflow-y: auto; }
-
+    /* ── REPORT LIST ── */
+    .report-list { max-height: 340px; overflow-y: auto; }
     .report-item {
-      padding: 0.8rem;
-      border-bottom: 1px solid #e6edea;
+      padding: 10px 4px;
+      border-bottom: 1px solid #e8eeed;
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 0.5rem;
+      align-items: flex-start;
+      gap: 10px;
     }
-
     .report-item:last-child { border-bottom: none; }
-    .report-info { flex: 1; }
-    .report-title { font-weight: 600; color: #1a2e28; font-size: 0.85rem; }
-    .report-desc { font-size: 0.75rem; color: #4a6358; margin-top: 0.15rem; }
-    .report-meta { font-size: 0.7rem; color: #8da396; margin-top: 0.2rem; }
+    .report-type { font-size: 0.83rem; font-weight: 600; color: #1a2e28; }
+    .report-desc { font-size: 0.75rem; color: #4a6358; margin-top: 2px; }
+    .report-meta { font-size: 0.7rem; color: #8da396; margin-top: 3px; }
 
-    .status-select {
-      border: 1.5px solid #e6edea;
-      border-radius: 1.5rem;
-      padding: 0.25rem 0.6rem;
+    /* ── STATUS SELECTS ── */
+    .status-sel {
       font-size: 0.72rem;
-      font-weight: bold;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 2rem;
+      border: 1.5px solid transparent;
       cursor: pointer;
       font-family: inherit;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.15s;
+      flex-shrink: 0;
     }
+    .status-sel:focus { border-color: #f4b942; }
+    .sel-pending   { background: #fff3e0; color: #804d00; }
+    .sel-progress  { background: #e3f0fc; color: #0d4b8a; }
+    .sel-review    { background: #f3e8ff; color: #5b21b6; }
+    .sel-resolved  { background: #e1f7e9; color: #145c35; }
+    .sel-notver    { background: #fff3e0; color: #804d00; }
+    .sel-verified  { background: #e1f7e9; color: #145c35; }
+    .sel-rejected  { background: #fdecec; color: #8b1c1c; }
 
-    .status-select:focus { border-color: #f4b942; }
-    .status-select.sel-pending  { background: #fff3e0; color: #c97e0a; }
-    .status-select.sel-progress { background: #e3f0fc; color: #1a6bbf; }
-    .status-select.sel-review   { background: #f3e8ff; color: #7c3aed; }
-    .status-select.sel-resolved { background: #e1f7e9; color: #1e7b48; }
-
-    .resident-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-
-    .resident-table th,
-    .resident-table td {
-      padding: 0.7rem 0.5rem;
+    /* ── RESIDENT TABLE ── */
+    .overflow-wrap { overflow-x: auto; }
+    .res-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
+    .res-table th {
+      font-size: 0.7rem;
+      color: #4a6358;
+      font-weight: 700;
       text-align: left;
-      border-bottom: 1px solid #e6edea;
+      padding: 6px 8px;
+      border-bottom: 1px solid #e8eeed;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
+    .res-table td {
+      padding: 9px 8px;
+      border-bottom: 1px solid #e8eeed;
+      color: #1a2e28;
+      vertical-align: middle;
+    }
+    .res-table tr:last-child td { border-bottom: none; }
+    .res-table tr:hover td { background: #f7fbf8; }
 
-    .resident-table th { color: #0b3b2f; font-weight: 700; }
+    .view-id-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      background: #eef5ee;
+      color: #1a4d2e;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 2rem;
+      text-decoration: none;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .view-id-btn:hover { background: #f4b942; color: #3a2200; }
+    .no-id { font-size: 0.7rem; color: #a0b4aa; font-style: italic; }
 
-    .empty-state { text-align: center; color: #8da396; padding: 2rem; font-size: 0.85rem; }
+    .del-btn {
+      background: #fff0f0;
+      border: none;
+      border-radius: 8px;
+      padding: 5px 8px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      line-height: 1;
+      transition: all 0.15s;
+    }
+    .del-btn:hover { background: #e24b4a; }
 
-    .footer-note { margin-top: 2rem; text-align: center; color: #8da396; font-size: 0.75rem; }
+    /* ── MODAL ── */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-backdrop.active { display: flex; }
+    .modal-box {
+      background: white;
+      border-radius: 16px;
+      padding: 1.75rem;
+      max-width: 380px;
+      width: 90%;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      animation: slideUp 0.2s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+    .modal-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .modal-title { font-size: 1rem; font-weight: 700; color: #1a2e28; margin-bottom: 8px; }
+    .modal-body { font-size: 0.83rem; color: #4a6358; line-height: 1.6; margin-bottom: 1.25rem; }
+    .modal-actions { display: flex; gap: 8px; justify-content: flex-end; }
+    .btn-cancel {
+      background: #f0f4f2;
+      border: none;
+      color: #1a2e28;
+      padding: 8px 20px;
+      border-radius: 2rem;
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    .btn-cancel:hover { background: #dce8e2; }
+    .btn-confirm-del {
+      background: #e24b4a;
+      border: none;
+      color: white;
+      padding: 8px 20px;
+      border-radius: 2rem;
+      font-size: 0.83rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s;
+    }
+    .btn-confirm-del:hover { background: #c03333; }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: #0b3b2f;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 2rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.25s;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    .empty-msg { text-align: center; color: #8da396; padding: 2rem 1rem; font-size: 0.83rem; }
+
+    .footer { margin-top: 2rem; text-align: center; color: #8da396; font-size: 0.72rem; }
 
     @media (max-width: 768px) {
       body { padding: 1rem; }
-      .content-grid { grid-template-columns: 1fr; }
-      .admin-header h1 { font-size: 1.2rem; }
+      .content-row { grid-template-columns: 1fr; }
+      .topbar-title { font-size: 0.9rem; }
     }
   </style>
 </head>
 <body>
-  <div class="admin-container">
-    <div class="admin-header">
-      <h1>🛡️ Super Admin Dashboard | Bantay Barangay</h1>
-      <div class="admin-info">
-        <span class="admin-badge">👑 SUPER ADMIN</span>
-        <button class="logout-btn" onclick="handleLogout()">🚪 Logout</button>
-      </div>
-    </div>
+<div class="dash">
 
-    <div class="stats-grid">
-      <div class="stat-card">
-        <h3>📋 TOTAL REPORTS</h3>
-        <div class="stat-number" id="totalReports">0</div>
-      </div>
-      <div class="stat-card">
-        <h3>⏳ PENDING REPORTS</h3>
-        <div class="stat-number" id="pendingReports">0</div>
-      </div>
-      <div class="stat-card">
-        <h3>✅ RESOLVED REPORTS</h3>
-        <div class="stat-number" id="resolvedReports">0</div>
-      </div>
-      <div class="stat-card">
-        <h3>👥 VERIFIED RESIDENTS</h3>
-        <div class="stat-number" id="totalResidents">0</div>
-      </div>
-    </div>
-
-    <div class="content-grid">
-      <div class="admin-card">
-        <h2>📌 Recent Reports</h2>
-        <ul class="report-list" id="recentReports">
-          <li class="empty-state">Loading reports...</li>
-        </ul>
-      </div>
-
-      <div class="admin-card">
-        <h2>👪 Resident Directory</h2>
-        <div style="overflow-x: auto;">
-          <table class="resident-table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Address</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="residentList">
-              <tr><td colspan="3" class="empty-state">Loading residents...</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-note">
-      🕊️ Bantay Barangay Admin Portal | Serbisyong Tapat, Barangay Sambayan
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-title">🛡️ Super Admin Dashboard | Bantay Barangay</div>
+    <div class="topbar-right">
+      <span class="badge-admin">👑 SUPER ADMIN</span>
+      <button class="btn-logout" onclick="handleLogout()">🚪 Logout</button>
     </div>
   </div>
 
-  <script>
-    // ── SESSION CHECK ─────────────────────────────────────────────────────────
-    fetch('check_session.php')
-      .then(res => res.json())
-      .then(data => {
-        if (!data.loggedIn) {
-          window.location.href = 'admin-login.html';
-        } else {
-          loadReports();
-          loadResidents();
-        }
-      });
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">📋 Total Reports</div>
+      <div class="stat-num" id="totalReports">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">⏳ Pending Reports</div>
+      <div class="stat-num" id="pendingReports">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">✅ Resolved Reports</div>
+      <div class="stat-num" id="resolvedReports">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">👥 Verified Residents</div>
+      <div class="stat-num" id="totalResidents">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">🕐 Pending Verification</div>
+      <div class="stat-num" id="pendingResidents">0</div>
+    </div>
+  </div>
 
-    // ── LOGOUT ────────────────────────────────────────────────────────────────
-    function handleLogout() {
-      window.location.href = 'admin_logout.php';
-    }
+  <!-- CONTENT -->
+  <div class="content-row">
+    <div class="panel">
+      <div class="panel-title">📌 Recent Reports</div>
+      <div class="report-list" id="recentReports">
+        <div class="empty-msg">Loading reports...</div>
+      </div>
+    </div>
 
-    // ── STATUS DROPDOWN COLOR UPDATE ─────────────────────────────────────────
-    function updateSelectColor(sel) {
-      sel.className = 'status-select';
-      const map = {
-        'Pending':      'sel-pending',
-        'In Progress':  'sel-progress',
-        'Under Review': 'sel-review',
-        'Resolved':     'sel-resolved'
-      };
-      sel.classList.add(map[sel.value] || '');
-      updateStats();
-    }
-
-    // ── STATS COUNT ───────────────────────────────────────────────────────────
-    function updateStats() {
-      const selects = document.querySelectorAll('#recentReports .status-select');
-      let total = selects.length;
-      let pending = 0, resolved = 0;
-      selects.forEach(s => {
-        if (s.value === 'Pending')  pending++;
-        if (s.value === 'Resolved') resolved++;
-      });
-      document.getElementById('totalReports').textContent   = total;
-      document.getElementById('pendingReports').textContent  = pending;
-      document.getElementById('resolvedReports').textContent = resolved;
-    }
-
-    // ── LOAD REPORTS ──────────────────────────────────────────────────────────
-    function loadReports() {
-      fetch('get_reports.php')
-        .then(res => res.json())
-        .then(reports => {
-          const list = document.getElementById('recentReports');
-          if (!reports.length) {
-            list.innerHTML = '<li class="empty-state">Walang reports pa.</li>';
-            return;
-          }
-          list.innerHTML = reports.map(r => {
-            const statusClass = {
-              'Pending':      'sel-pending',
-              'In Progress':  'sel-progress',
-              'Under Review': 'sel-review',
-              'Resolved':     'sel-resolved'
-            }[r.status] || 'sel-pending';
-
-            return `
-              <li class="report-item">
-                <div class="report-info">
-                  <div class="report-title">${r.report_type}</div>
-                  <div class="report-desc">${r.description}</div>
-                  <div class="report-meta">${r.location} · ${r.created_at}</div>
-                </div>
-                <select class="status-select ${statusClass}" data-id="${r.id}" onchange="updateSelectColor(this); saveStatus(this)">
-                  <option ${r.status === 'Pending'      ? 'selected' : ''}>Pending</option>
-                  <option ${r.status === 'In Progress'  ? 'selected' : ''}>In Progress</option>
-                  <option ${r.status === 'Under Review' ? 'selected' : ''}>Under Review</option>
-                  <option ${r.status === 'Resolved'     ? 'selected' : ''}>Resolved</option>
-                </select>
-              </li>`;
-          }).join('');
-          updateStats();
-        })
-        .catch(() => {
-          document.getElementById('recentReports').innerHTML =
-            '<li class="empty-state">Hindi ma-load ang reports.</li>';
-        });
-    }
-
-    // ── LOAD RESIDENTS ────────────────────────────────────────────────────────
-    function loadResidents() {
-      fetch('get_residents.php')
-        .then(res => res.json())
-        .then(residents => {
-          const tbody = document.getElementById('residentList');
-          if (!residents.length) {
-            tbody.innerHTML = '<tr><td colspan="3" class="empty-state">Walang residents pa.</td></tr>';
-            return;
-          }
-          tbody.innerHTML = residents.map(r => `
+    <div class="panel">
+      <div class="panel-title">👪 Resident Directory</div>
+      <div class="overflow-wrap">
+        <table class="res-table">
+          <thead>
             <tr>
+              <th>Name</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>ID</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="residentList">
+            <tr><td colspan="8" class="empty-msg">Loading residents...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">🕊️ Bantay Barangay Admin Portal | Serbisyong Tapat, Barangay Sambayan</div>
+</div>
+
+<!-- DELETE MODAL -->
+<div class="modal-backdrop" id="deleteModal">
+  <div class="modal-box">
+    <div class="modal-icon">🗑️</div>
+    <div class="modal-title">Remove resident?</div>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-confirm-del" onclick="confirmDelete()">Remove</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ── STATE ─────────────────────────────────────────────────────────────────
+  let pendingDeleteId   = null;
+  let pendingDeleteName = null;
+
+  // ── SESSION CHECK ─────────────────────────────────────────────────────────
+  fetch('check_session.php')
+    .then(r => r.json())
+    .then(d => {
+      if (!d.loggedIn) window.location.href = 'admin-login.html';
+      else { loadReports(); loadResidents(); }
+    });
+
+  // ── LOGOUT ────────────────────────────────────────────────────────────────
+  function handleLogout() { window.location.href = 'admin_logout.php'; }
+
+  // ── TOAST ─────────────────────────────────────────────────────────────────
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  // ── STATUS COLOR MAPS ─────────────────────────────────────────────────────
+  const reportClassMap = {
+    'Pending':      'sel-pending',
+    'In Progress':  'sel-progress',
+    'Under Review': 'sel-review',
+    'Resolved':     'sel-resolved'
+  };
+  const resClassMap = {
+    'Not Verified': 'sel-notver',
+    'Verified':     'sel-verified',
+    'Rejected':     'sel-rejected'
+  };
+
+  function applyReportColor(sel) {
+    sel.className = 'status-sel ' + (reportClassMap[sel.value] || 'sel-pending');
+  }
+  function applyResColor(sel) {
+    sel.className = 'status-sel ' + (resClassMap[sel.value] || 'sel-notver');
+  }
+
+  // ── STATS ─────────────────────────────────────────────────────────────────
+  function updateReportStats() {
+    const sels = document.querySelectorAll('#recentReports .status-sel');
+    let pending = 0, resolved = 0;
+    sels.forEach(s => {
+      if (s.value === 'Pending')  pending++;
+      if (s.value === 'Resolved') resolved++;
+    });
+    document.getElementById('totalReports').textContent   = sels.length;
+    document.getElementById('pendingReports').textContent  = pending;
+    document.getElementById('resolvedReports').textContent = resolved;
+  }
+
+  function updateResidentStats() {
+    const sels = document.querySelectorAll('#residentList .status-sel');
+    let verified = 0, notVerified = 0;
+    sels.forEach(s => {
+      if (s.value === 'Verified')     verified++;
+      if (s.value === 'Not Verified') notVerified++;
+    });
+    document.getElementById('totalResidents').textContent   = verified;
+    document.getElementById('pendingResidents').textContent = notVerified;
+  }
+
+  // ── LOAD REPORTS ──────────────────────────────────────────────────────────
+  function loadReports() {
+    fetch('get_reports.php')
+      .then(r => r.json())
+      .then(reports => {
+        const el = document.getElementById('recentReports');
+        if (!reports.length) {
+          el.innerHTML = '<div class="empty-msg">No reports yet.</div>';
+          return;
+        }
+        el.innerHTML = reports.map(r => `
+          <div class="report-item">
+            <div>
+              <div class="report-type">${r.report_type}</div>
+              <div class="report-desc">${r.description}</div>
+              <div class="report-meta">📍 ${r.location} &middot; ${r.created_at}</div>
+            </div>
+            <select
+              class="status-sel ${reportClassMap[r.status] || 'sel-pending'}"
+              data-id="${r.id}"
+              onchange="applyReportColor(this); saveReportStatus(this); updateReportStats()">
+              <option${r.status === 'Pending'      ? ' selected' : ''}>Pending</option>
+              <option${r.status === 'In Progress'  ? ' selected' : ''}>In Progress</option>
+              <option${r.status === 'Under Review' ? ' selected' : ''}>Under Review</option>
+              <option${r.status === 'Resolved'     ? ' selected' : ''}>Resolved</option>
+            </select>
+          </div>`).join('');
+        updateReportStats();
+      })
+      .catch(() => {
+        document.getElementById('recentReports').innerHTML =
+          '<div class="empty-msg">Failed to load reports.</div>';
+      });
+  }
+
+  // ── LOAD RESIDENTS ────────────────────────────────────────────────────────
+  function loadResidents() {
+    fetch('get_residents.php')
+      .then(r => r.json())
+      .then(residents => {
+        const tbody = document.getElementById('residentList');
+        if (!residents.length) {
+          tbody.innerHTML = '<tr><td colspan="8" class="empty-msg">No residents yet.</td></tr>';
+          return;
+        }
+        tbody.innerHTML = residents.map(r => {
+          const idLink = r.verification_id
+            ? `<a href="${r.verification_id}" target="_blank" class="view-id-btn">📄 View ID</a>`
+            : `<span class="no-id">No file</span>`;
+          return `
+            <tr id="resident-row-${r.id}">
               <td>${r.full_name}</td>
               <td>${r.address}</td>
-              <td>${r.status}</td>
-            </tr>`).join('');
-          document.getElementById('totalResidents').textContent =
-            residents.filter(r => r.status === 'Verified').length;
-        })
-        .catch(() => {
-          document.getElementById('residentList').innerHTML =
-            '<tr><td colspan="3" class="empty-state">Hindi ma-load ang residents.</td></tr>';
-        });
-    }
-
-    // ── SAVE STATUS SA DB (hindi nagde-delete, update lang) ───────────────────
-    function saveStatus(sel) {
-      const id     = sel.dataset.id;
-      const status = sel.value;
-      fetch('update_status.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `id=${id}&status=${encodeURIComponent(status)}`
+              <td>${r.phone}</td>
+              <td>${r.age}</td>
+              <td>${r.gender}</td>
+              <td>${idLink}</td>
+              <td>
+                <select
+                  class="status-sel ${resClassMap[r.status] || 'sel-notver'}"
+                  data-id="${r.id}"
+                  onchange="applyResColor(this); saveResidentStatus(this); updateResidentStats()">
+                  <option${r.status === 'Not Verified' ? ' selected' : ''}>Not Verified</option>
+                  <option${r.status === 'Verified'     ? ' selected' : ''}>Verified</option>
+                  <option${r.status === 'Rejected'     ? ' selected' : ''}>Rejected</option>
+                </select>
+              </td>
+              <td>
+                <button
+                  class="del-btn"
+                  onclick="openModal('${r.id}', '${r.full_name.replace(/'/g, "\\'")}')"
+                  aria-label="Remove ${r.full_name}">🗑️</button>
+              </td>
+            </tr>`;
+        }).join('');
+        updateResidentStats();
+      })
+      .catch(() => {
+        document.getElementById('residentList').innerHTML =
+          '<tr><td colspan="8" class="empty-msg">Failed to load residents.</td></tr>';
       });
-    }
-  </script>
+  }
+
+  // ── SAVE REPORT STATUS ────────────────────────────────────────────────────
+  function saveReportStatus(sel) {
+    fetch('update_status.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `id=${sel.dataset.id}&status=${encodeURIComponent(sel.value)}`
+    }).then(() => showToast('✅ Status updated'));
+  }
+
+  // ── SAVE RESIDENT STATUS ──────────────────────────────────────────────────
+  function saveResidentStatus(sel) {
+    fetch('update_resident_status.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `id=${sel.dataset.id}&status=${encodeURIComponent(sel.value)}`
+    }).then(() => showToast('✅ Verification status updated'));
+  }
+
+  // ── DELETE MODAL ──────────────────────────────────────────────────────────
+  function openModal(id, name) {
+    pendingDeleteId   = id;
+    pendingDeleteName = name;
+    document.getElementById('modalBody').innerHTML =
+      `Remove <strong>${name}</strong> from the Resident Directory?`;
+    document.getElementById('deleteModal').classList.add('active');
+  }
+
+  function closeModal() {
+    document.getElementById('deleteModal').classList.remove('active');
+    pendingDeleteId   = null;
+    pendingDeleteName = null;
+  }
+
+  // Close modal on backdrop click
+  document.getElementById('deleteModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  function confirmDelete() {
+    if (!pendingDeleteId) return;
+    const id = pendingDeleteId;
+    closeModal();
+    fetch('hide_resident.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: `id=${id}`
+    })
+    .then(r => r.json())
+    .then(d => {
+      if (d.success) {
+        const row = document.getElementById(`resident-row-${id}`);
+        if (row) row.remove();
+        updateResidentStats();
+        showToast('🗑️ Resident removed from list');
+      } else {
+        showToast('❌ Failed to remove. Please try again.');
+      }
+    })
+    .catch(() => showToast('❌ Connection error. Please try again.'));
+  }
+</script>
 </body>
 </html>
