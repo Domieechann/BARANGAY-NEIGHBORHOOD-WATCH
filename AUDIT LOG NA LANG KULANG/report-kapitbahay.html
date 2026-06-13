@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Bantay Barangay | Report Kapitbahay</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: linear-gradient(145deg, #eef2f7 0%, #d9e2ec 100%);
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+    }
+
+    .portal-container {
+      max-width: 880px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 2rem;
+      box-shadow: 0 25px 45px -12px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.05);
+      overflow: hidden;
+      transition: all 0.2s ease;
+      animation: fadeSlideUp 0.4s ease-out;
+    }
+
+    .portal-header {
+      background: #020353;
+      background-image: radial-gradient(circle at 10% 30%, rgba(60,130,110,0.2) 2%, transparent 2.5%),
+                        radial-gradient(circle at 85% 70%, rgba(200,230,210,0.1) 1.8%, transparent 2%);
+      background-size: 40px 40px, 32px 32px;
+      padding: 1.5rem 2rem;
+      border-bottom: 6px solid #f4b942;
+    }
+
+    .back-link-wrapper { margin-bottom: 0.75rem; }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #f9f3e2;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      background: rgba(0,0,0,0.25);
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(2px);
+    }
+
+    .back-link:hover {
+      background: rgba(0,0,0,0.4);
+      transform: translateX(-3px);
+      color: white;
+    }
+
+    .header-title-section { text-align: center; }
+
+    .portal-header h2 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: white;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-top: 0.25rem;
+    }
+
+    .header-sub {
+      font-size: 1rem;
+      color: #f9f3e2;
+      background: rgba(0,0,0,0.2);
+      display: inline-block;
+      padding: 0.25rem 1.2rem;
+      border-radius: 40px;
+      margin-top: 0.6rem;
+      font-weight: 500;
+    }
+
+    .elegant-divider {
+      height: 4px;
+      background: linear-gradient(90deg, #f4b942, #d9a13b, #f4b942);
+      width: 100%;
+    }
+
+    .form-container { padding: 2rem; }
+
+    .report-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .form-label {
+      font-weight: 700;
+      color: #1a2e28;
+      font-size: 1rem;
+      letter-spacing: -0.2px;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid #e2e8e6;
+      border-radius: 1rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      background: #fefef7;
+      color: #1e2f29;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23476b5f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1rem;
+    }
+
+    select:focus {
+      outline: none;
+      border-color: #f4b942;
+      box-shadow: 0 0 0 3px rgba(244,185,66,0.2);
+      background: #ffffff;
+    }
+
+    select:hover { border-color: #cbdcd5; }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      border: 1.5px solid #e2e8e6;
+      border-radius: 1rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      transition: all 0.2s ease;
+      background: #fefef7;
+      color: #1e2f29;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #f4b942;
+      box-shadow: 0 0 0 3px rgba(244,185,66,0.2);
+      background: #ffffff;
+    }
+
+    textarea { resize: vertical; min-height: 110px; }
+
+    .helper-text { font-size: 0.75rem; color: #8da396; }
+
+    .confidential-note {
+      background: #fef7e8;
+      border-left: 4px solid #f4b942;
+      padding: 0.9rem 1.2rem;
+      border-radius: 1rem;
+      font-size: 0.85rem;
+      color: #7a681d;
+      margin: 0.25rem 0;
+    }
+
+    .confidential-note small {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-submit {
+      background: #0b3b2f;
+      color: white;
+      border: none;
+      padding: 0.8rem 2rem;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 3rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      font-family: inherit;
+    }
+
+    .btn-submit:hover {
+      background: #1f5e4b;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 18px rgba(11,59,47,0.25);
+    }
+
+    .btn-submit:active { transform: translateY(1px); }
+
+    .btn-cancel {
+      background: transparent;
+      border: 1.5px solid #cbdcd5;
+      padding: 0.75rem 1.8rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      border-radius: 3rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: #476b5f;
+      text-decoration: none;
+      display: inline-block;
+      font-family: inherit;
+      text-align: center;
+    }
+
+    .btn-cancel:hover {
+      background: #f0f4f2;
+      border-color: #b3c9be;
+      color: #1a2e28;
+      transform: translateY(-1px);
+    }
+
+    .portal-footer {
+      background: #f8fafc;
+      padding: 1.2rem 2rem;
+      text-align: center;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.8rem;
+      color: #5b6e66;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: #eef2e7;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-weight: 500;
+      font-size: 0.7rem;
+      color: #2c5a4a;
+    }
+
+    .emergency-note { display: inline-flex; align-items: center; gap: 0.4rem; }
+
+    hr { display: none; }
+
+    @media (max-width: 640px) {
+      body { padding: 1rem; }
+      .form-container { padding: 1.5rem; }
+      .portal-header h2 { font-size: 1.5rem; }
+      .form-actions { flex-direction: column; align-items: stretch; }
+      .btn-submit, .btn-cancel { text-align: center; justify-content: center; width: 100%; }
+      .portal-footer { flex-direction: column; text-align: center; }
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    input:focus-visible, textarea:focus-visible, select:focus-visible,
+    button:focus-visible, a:focus-visible {
+      outline: 3px solid #f4b942;
+      outline-offset: 2px;
+    }
+
+    /* ── Validation ── */
+    .field-error {
+      border-color: #e53e3e !important;
+      box-shadow: 0 0 0 3px rgba(229,62,62,0.15) !important;
+      background: #fff8f8 !important;
+    }
+
+    .error-msg {
+      color: #c53030;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-top: 0.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      animation: fadeSlideUp 0.2s ease-out;
+    }
+
+    .error-msg::before { content: "⚠"; font-size: 0.78rem; line-height: 1; }
+
+    .char-counter {
+      font-size: 0.73rem;
+      color: #8da396;
+      text-align: right;
+      margin-top: 0.15rem;
+      transition: color 0.2s;
+    }
+
+    .char-counter.warn   { color: #d97706; font-weight: 500; }
+    .char-counter.danger { color: #c53030; font-weight: 700; }
+
+    .success-toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #0b3b2f;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 1rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      animation: fadeSlideUp 0.3s ease-out;
+      border-left: 4px solid #f4b942;
+    }
+
+    /* ── Drag & Drop Upload Zone ── */
+    .upload-zone {
+      border: 2px dashed #cbdcd5;
+      border-radius: 1.2rem;
+      background: #fafdf7;
+      padding: 2.2rem 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .upload-zone:hover,
+    .upload-zone.dragover {
+      border-color: #f4b942;
+      background: #fffcf2;
+      box-shadow: 0 0 0 3px rgba(244,185,66,0.15);
+    }
+
+    .upload-zone.field-error {
+      border-color: #e53e3e !important;
+      box-shadow: 0 0 0 3px rgba(229,62,62,0.15) !important;
+      background: #fff8f8 !important;
+    }
+
+    .upload-zone input[type="file"] {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .upload-icon { font-size: 2.2rem; line-height: 1; margin-bottom: 0.6rem; display: block; }
+    .upload-main-text { font-size: 0.95rem; font-weight: 600; color: #2c4a40; margin-bottom: 0.5rem; }
+    .upload-or { font-size: 0.8rem; color: #9eb8ae; margin: 0.5rem 0; }
+
+    .upload-browse-btn {
+      display: inline-block;
+      background: #0b3b2f;
+      color: white;
+      padding: 0.6rem 1.6rem;
+      border-radius: 3rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      pointer-events: none;
+      user-select: none;
+      margin-bottom: 0.6rem;
+    }
+
+    .upload-sub-text { font-size: 0.75rem; color: #9eb8ae; margin-top: 0.4rem; }
+
+    .upload-preview {
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.8rem;
+      padding: 0.7rem 1rem;
+      background: #f0f7f4;
+      border-radius: 0.8rem;
+      border: 1px solid #d0e8de;
+    }
+
+    .upload-preview.visible { display: flex; }
+
+    .preview-thumb {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      border: 1px solid #cbdcd5;
+      flex-shrink: 0;
+    }
+
+    .preview-info { flex: 1; min-width: 0; text-align: left; }
+
+    .preview-name {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1a2e28;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .preview-size { font-size: 0.75rem; color: #8da396; }
+
+    .preview-remove {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.1rem;
+      color: #c53030;
+      padding: 0.2rem 0.4rem;
+      border-radius: 0.4rem;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+
+    .preview-remove:hover { background: #fee2e2; }
+  </style>
+</head>
+<body>
+
+<div class="portal-container">
+
+  <div class="portal-header">
+    <div class="back-link-wrapper">
+      <a href="homepage.php" class="back-link">← Go Back / Bumalik</a>
+    </div>
+    <div class="header-title-section">
+      <h2>REPORT KAPITBAHAY / MAG-ULAT NG KAPITBAHAY</h2>
+      <div class="header-sub">Fill out the form below to submit a report about your neighbor. / Punan ang form sa ibaba upang magsumite ng ulat tungkol sa iyong kapitbahay.</div>
+    </div>
+  </div>
+  <div class="elegant-divider"></div>
+
+  <div class="form-container">
+    <form id="kapitbahayForm" class="report-form">
+
+      <div class="form-group">
+        <div class="form-label">TYPE OF ISSUE / URI NG ISYU:</div>
+        <select id="issue_level" name="issue_level">
+          <option value="">-- Select Priority Level / Piliin ang Antas ng Priyoridad --</option>
+          <option value="normal">Normal - Minor, non-urgent concern / Karaniwan - Maliit, hindi urhenteng alalahanin</option>
+          <option value="medium">Medium - Needs attention soon / Katamtaman - Nangangailangan ng pansin sa lalong madaling panahon</option>
+          <option value="critical">Critical - Urgent, requires immediate action / Kritikal - Urhente, nangangailangan ng agarang aksyon</option>
+        </select>
+        <div class="helper-text">Select the urgency level of your concern. / Piliin ang antas ng urgensya ng iyong alalahanin.</div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-label">NAME OF REPORTED INDIVIDUAL / PANGALAN NG IPINAG-UULAT NA INDIBIDWAL:</div>
+        <input type="text" id="reported_name" name="reported_name" placeholder="Enter full name of the person / Ilagay ang buong pangalan ng tao">
+        <div class="helper-text">Please provide the complete name if known. / Mangyaring ibigay ang kumpletong pangalan kung alam.</div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-label">ADDRESS OF THE REPORTED INDIVIDUAL / TIRAHAN NG IPINAG-UULAT NA INDIBIDWAL:</div>
+        <input type="text" id="address" name="address" placeholder="e.g. Blk 5 Lot 3, Sampaguita St., Barangay... / hal. Blk 5 Lot 3, Sampaguita St., Barangay...">
+        <div class="helper-text">Exact address helps barangay officials locate the resident. / Ang tumpak na address ay tumutulong sa mga opisyal ng barangay na mahanap ang residente.</div>
+      </div>
+
+      <div class="form-group">
+        <div class="form-label">DESCRIBE THE ISSUE / ILARAWAN ANG ISYU:</div>
+        <textarea id="description" name="description" rows="5" placeholder="Ilarawan ang isyu nang detalyado... (Describe the issue in detail)"></textarea>
+        <div class="helper-text">Include dates, times, and specific incidents to help with mediation. / Isama ang mga petsa, oras, at partikular na insidente upang makatulong sa pamamagitan.</div>
+      </div>
+
+      <!-- ── Drag & Drop Upload Zone ── -->
+      <div class="form-group">
+        <div class="form-label">ATTACH PHOTO (optional) / MAGLAKIP NG LITRATO (opsyonal):</div>
+
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" id="photo" name="photo" accept="image/jpeg,image/png,image/webp,image/gif">
+          <span class="upload-icon">📎</span>
+          <div class="upload-main-text">I-drag &amp; i-drop ang file dito / Drag &amp; drop file here</div>
+          <div class="upload-or">o / or</div>
+          <div class="upload-browse-btn">Maghanap ng File / Browse File</div>
+          <div class="upload-sub-text">JPG, PNG, WEBP, GIF · Max 5MB</div>
+        </div>
+
+        <div class="upload-preview" id="uploadPreview">
+          <img class="preview-thumb" id="previewThumb" src="" alt="preview" style="display:none">
+          <div class="preview-info">
+            <div class="preview-name" id="previewName"></div>
+            <div class="preview-size" id="previewSize"></div>
+          </div>
+          <button type="button" class="preview-remove" id="previewRemove" title="Remove file">✕</button>
+        </div>
+
+        <div class="helper-text">Upload supporting image (JPG, PNG, WEBP, GIF) — max 5MB. / Mag-upload ng sumusuportang larawan — max 5MB kung naaangkop.</div>
+      </div>
+
+      <div class="confidential-note">
+        <small>
+          🔒 Note: This report is confidential and will be handled with discretion. Your identity will be protected according to barangay data privacy protocols. / Paunawa: Ang ulat na ito ay kumpidensyal at hahawakan nang may pag-iingat. Ang iyong pagkakakilanlan ay protektado alinsunod sa mga protocol ng data privacy ng barangay.
+        </small>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-submit">Submit Report / Isumite ang Ulat</button>
+        <a href="homepage.php" class="btn-cancel">Cancel / Kanselahin</a>
+      </div>
+    </form>
+  </div>
+
+  <div class="portal-footer">
+    <div class="emergency-note">
+      <span>📞 Barangay Hotline: (02) 1234 5678</span>
+    </div>
+    <div class="badge">Confidential Reporting · Data Privacy Compliant / Ligtas na Pag-uulat · Alinsunod sa Privacy ng Datos</div>
+    <div>Serbisyong Tapat, Barangay Sambayan</div>
+  </div>
+</div>
+
+<script>
+// ── Helpers ──
+function showError(fieldId, message) {
+  var field = document.getElementById(fieldId);
+  if (!field) return;
+  field.classList.add('field-error');
+  var old = field.parentElement.querySelector('.error-msg');
+  if (old) old.remove();
+  var errEl = document.createElement('div');
+  errEl.className = 'error-msg';
+  errEl.textContent = message;
+  field.insertAdjacentElement('afterend', errEl);
+}
+
+function clearError(fieldId) {
+  var field = document.getElementById(fieldId);
+  if (!field) return;
+  field.classList.remove('field-error');
+  var errEl = field.parentElement.querySelector('.error-msg');
+  if (errEl) errEl.remove();
+}
+
+function showToast(message) {
+  var existing = document.querySelector('.success-toast');
+  if (existing) existing.remove();
+  var toast = document.createElement('div');
+  toast.className = 'success-toast';
+  toast.textContent = message;
+  document.body.appendChild(toast);
+  setTimeout(function() { toast.remove(); }, 3500);
+}
+
+// ── Validators ──
+function validateName(val) {
+  val = val.trim();
+  if (val.length < 3)
+    return 'Please provide a full name (at least 3 characters) / Mangyaring ibigay ang buong pangalan (hindi bababa sa 3 karakter)';
+  if (/[^a-zA-ZÀ-ÿ\s.,'\-]/.test(val))
+    return 'Name should not contain special characters or numbers / Ang pangalan ay hindi dapat naglalaman ng espesyal na karakter o numero';
+  if (/(.)\1{4,}/.test(val))
+    return 'Please enter a valid name / Mangyaring magbigay ng wastong pangalan';
+  if (!/\s/.test(val))
+    return 'Please enter a full name (first and last) / Mangyaring ilagay ang buong pangalan (una at apelyido)';
+  return null;
+}
+
+function validateAddress(val) {
+  val = val.trim();
+  if (!val) return null;
+  if (val.length < 5)
+    return 'Please provide a more specific address / Pakiusap, magbigay ng mas tiyak na address';
+  if (!/[a-zA-Z]/.test(val))
+    return 'Please enter a valid address / Mangyaring magbigay ng wastong address';
+  if (/[^a-zA-Z0-9\s.,#\-']/.test(val))
+    return 'Special characters like $, %, ^, @ are not allowed / Bawal ang mga espesyal na karakter tulad ng $, %, ^, @';
+  if (/(.)\1{4,}/.test(val))
+    return 'Please enter a valid address / Mangyaring magbigay ng wastong address';
+  if (!/\s/.test(val))
+    return 'Please enter a valid address / Mangyaring magbigay ng wastong address';
+  return null;
+}
+
+// ── Character Counter ──
+var MAX_CHARS = 800;
+var descField = document.getElementById('description');
+var descCounter = document.createElement('div');
+descCounter.className = 'char-counter';
+descCounter.textContent = '0 / ' + MAX_CHARS;
+descField.insertAdjacentElement('afterend', descCounter);
+
+descField.addEventListener('input', function() {
+  var len = this.value.length;
+  if (len > MAX_CHARS) { this.value = this.value.slice(0, MAX_CHARS); len = MAX_CHARS; }
+  descCounter.textContent = len + ' / ' + MAX_CHARS;
+  descCounter.className = 'char-counter';
+  if (len > MAX_CHARS * 0.85) descCounter.classList.add('warn');
+  if (len >= MAX_CHARS) { descCounter.classList.remove('warn'); descCounter.classList.add('danger'); }
+});
+
+// ── Real-time Validation ──
+document.getElementById('issue_level').addEventListener('change', function() {
+  if (this.value) clearError('issue_level');
+});
+
+document.getElementById('reported_name').addEventListener('blur', function() {
+  var val = this.value.trim();
+  if (!val) { showError('reported_name', 'Please enter the name of the individual / Mangyaring ilagay ang pangalan ng indibidwal'); return; }
+  var err = validateName(val);
+  if (err) showError('reported_name', err); else clearError('reported_name');
+});
+document.getElementById('reported_name').addEventListener('input', function() {
+  if (this.value.trim()) clearError('reported_name');
+});
+
+document.getElementById('address').addEventListener('blur', function() {
+  var err = validateAddress(this.value);
+  if (err) showError('address', err); else clearError('address');
+});
+document.getElementById('address').addEventListener('input', function() {
+  if (!this.value.trim()) clearError('address');
+});
+
+descField.addEventListener('blur', function() {
+  var val = this.value.trim();
+  if (val && val.length < 20)
+    showError('description', 'Description must be at least 20 characters / Ang paglalarawan ay dapat hindi bababa sa 20 karakter');
+  else clearError('description');
+});
+
+// ── Drag & Drop Upload Zone ──
+var uploadZone    = document.getElementById('uploadZone');
+var photoInput    = document.getElementById('photo');
+var uploadPreview = document.getElementById('uploadPreview');
+var previewThumb  = document.getElementById('previewThumb');
+var previewName   = document.getElementById('previewName');
+var previewSize   = document.getElementById('previewSize');
+var previewRemove = document.getElementById('previewRemove');
+
+function formatBytes(b) {
+  if (b < 1024) return b + ' B';
+  if (b < 1048576) return (b / 1024).toFixed(1) + ' KB';
+  return (b / 1048576).toFixed(1) + ' MB';
+}
+
+function handleFile(file) {
+  var allowed = ['image/jpeg','image/jpg','image/png','image/webp','image/gif'];
+  if (allowed.indexOf(file.type) === -1) {
+    showError('uploadZone', 'File must be JPG, PNG, WEBP, or GIF only / Ang file ay dapat JPG, PNG, WEBP, o GIF lamang');
+    photoInput.value = '';
+    return;
+  }
+  if (file.size > 5 * 1024 * 1024) {
+    var mb = (file.size / 1048576).toFixed(1);
+    showError('uploadZone', 'File exceeds 5MB. Please choose a smaller image / Ang file ay sobra sa 5MB. Pumili ng mas maliit na imahe');
+    photoInput.value = '';
+    return;
+  }
+
+  clearError('uploadZone');
+  previewName.textContent = file.name;
+  previewSize.textContent = formatBytes(file.size);
+
+  var reader = new FileReader();
+  reader.onload = function(e) { previewThumb.src = e.target.result; };
+  reader.readAsDataURL(file);
+  previewThumb.style.display = 'block';
+
+  uploadPreview.classList.add('visible');
+}
+
+photoInput.addEventListener('change', function() {
+  if (this.files && this.files[0]) handleFile(this.files[0]);
+});
+
+uploadZone.addEventListener('dragover', function(e) {
+  e.preventDefault();
+  uploadZone.classList.add('dragover');
+});
+
+uploadZone.addEventListener('dragleave', function() {
+  uploadZone.classList.remove('dragover');
+});
+
+uploadZone.addEventListener('drop', function(e) {
+  e.preventDefault();
+  uploadZone.classList.remove('dragover');
+  var file = e.dataTransfer.files[0];
+  if (file) {
+    try { var dt = new DataTransfer(); dt.items.add(file); photoInput.files = dt.files; } catch(_) {}
+    handleFile(file);
+  }
+});
+
+previewRemove.addEventListener('click', function() {
+  photoInput.value = '';
+  uploadPreview.classList.remove('visible');
+  previewThumb.src = '';
+  previewThumb.style.display = 'none';
+  previewName.textContent = '';
+  previewSize.textContent = '';
+  clearError('uploadZone');
+});
+
+// ── Submit ──
+document.querySelector('.report-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var isValid = true;
+
+  if (!document.getElementById('issue_level').value) {
+    showError('issue_level', 'Please select the urgency level / Pakiusap, piliin ang antas ng pagkamadalian ng isyu');
+    isValid = false;
+  } else clearError('issue_level');
+
+  var nameVal = document.getElementById('reported_name').value.trim();
+  if (!nameVal) {
+    showError('reported_name', 'Please enter the name of the reported individual / Mangyaring ilagay ang pangalan ng ipinag-uulat na indibidwal');
+    isValid = false;
+  } else {
+    var nameErr = validateName(nameVal);
+    if (nameErr) { showError('reported_name', nameErr); isValid = false; }
+    else clearError('reported_name');
+  }
+
+  var addrErr = validateAddress(document.getElementById('address').value);
+  if (addrErr) { showError('address', addrErr); isValid = false; }
+  else clearError('address');
+
+  var descVal = descField.value.trim();
+  if (!descVal) {
+    showError('description', 'Please describe the issue / Pakiusap, ilarawan ang isyu');
+    isValid = false;
+  } else if (descVal.length < 20) {
+    showError('description', 'Description must be at least 20 characters / Ang paglalarawan ay dapat hindi bababa sa 20 karakter');
+    isValid = false;
+  } else clearError('description');
+
+  if (photoInput.files && photoInput.files[0]) {
+    var file = photoInput.files[0];
+    var allowed = ['image/jpeg','image/jpg','image/png','image/webp','image/gif'];
+    if (allowed.indexOf(file.type) === -1) {
+      showError('uploadZone', 'File must be JPG, PNG, WEBP, or GIF only / Ang file ay dapat JPG, PNG, WEBP, o GIF lamang');
+      isValid = false;
+    } else if (file.size > 5 * 1024 * 1024) {
+      var mb2 = (file.size / 1048576).toFixed(1);
+      showError('uploadZone', 'File exceeds 5MB (' + mb2 + 'MB). Please choose a smaller image.');
+      isValid = false;
+    } else clearError('uploadZone');
+  }
+
+  if (!isValid) {
+    var firstErr = document.querySelector('.field-error');
+    if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  const formData = new FormData(this);
+
+fetch('submit_kapitbahay.php', {
+    method: 'POST',
+    body: formData
+})
+.then(r => r.json())
+.then(data => {
+    if(data.success){
+        showToast('✅ Report successfully submitted!');
+
+        setTimeout(() => {
+            window.location.href = 'homepage.php';
+        }, 1500);
+    } else {
+        showToast('❌ Failed to submit report');
+    }
+})
+.catch(() => {
+    showToast('❌ Server error');
+});
+});
+</script>
+</body>
+</html>

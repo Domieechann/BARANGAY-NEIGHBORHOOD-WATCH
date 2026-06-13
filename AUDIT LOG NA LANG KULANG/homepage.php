@@ -1,0 +1,507 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.html');
+    exit;
+}
+$username = htmlspecialchars($_SESSION['username'] ?? 'Resident');
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Bantay Barangay | Citizen Services Portal</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #eeeef7 0%, #d9e2ec 100%);
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+      min-height: 100vh;
+      padding: 1rem;
+      overflow-x: hidden;
+    }
+
+    .portal-container {
+      max-width: 1600px;
+      width: 100%;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 2rem;
+      box-shadow: 0 25px 45px -12px rgba(0,0,0,0.25), 0 4px 12px rgba(0,0,0,0.05);
+      overflow: hidden;
+      min-height: calc(100vh - 2rem);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    .portal-header {
+      background: #020353;
+      background-image:
+        radial-gradient(circle at 10% 30%, rgba(60,130,110,0.2) 2%, transparent 2.5%),
+        radial-gradient(circle at 85% 70%, rgba(200,230,210,0.1) 1.8%, transparent 2%);
+      background-size: 40px 40px, 32px 32px;
+      padding: 2rem 2rem 1.8rem 2rem;
+      text-align: center;
+      border-bottom: 6px solid #f4b942;
+      position: relative;
+    }
+
+    .portal-header h1 {
+      font-size: clamp(1.6rem, 5vw, 2.5rem);
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      color: white;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .portal-header h1:before { content: "🏛️"; font-size: clamp(1.4rem, 4vw, 2rem); filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); }
+    .portal-header h1:after  { content: "🤝"; font-size: clamp(1.4rem, 4vw, 2rem); filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); }
+
+    .tagline {
+      font-size: clamp(0.85rem, 3vw, 1.15rem);
+      color: #f9f3e2;
+      background: rgba(0,0,0,0.25);
+      display: inline-block;
+      padding: 0.3rem 1.4rem;
+      border-radius: 40px;
+      backdrop-filter: blur(2px);
+      margin-top: 0.75rem;
+      font-weight: 500;
+    }
+
+    /* ── USER GREETING + LOGOUT (top-right of header) ── */
+    .header-user-bar {
+      position: absolute;
+      top: 1.1rem;
+      right: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .header-greeting {
+      font-size: 0.78rem;
+      color: #f9f3e2;
+      background: rgba(255,255,255,0.12);
+      padding: 0.3rem 0.9rem;
+      border-radius: 2rem;
+      font-weight: 500;
+      backdrop-filter: blur(4px);
+      white-space: nowrap;
+    }
+
+    .btn-logout {
+      background: rgba(226,75,74,0.85);
+      color: white;
+      border: none;
+      padding: 0.38rem 1rem;
+      border-radius: 2rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      backdrop-filter: blur(4px);
+      transition: background 0.2s, transform 0.15s;
+      text-decoration: none;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .btn-logout:hover {
+      background: #c03333;
+      transform: translateY(-1px);
+    }
+
+    /* ── DIVIDER ── */
+    .elegant-divider {
+      height: 4px;
+      background: linear-gradient(90deg, #f4b942, #d9a13b, #f4b942);
+      width: 100%;
+    }
+
+    /* ── LAYOUT ── */
+    .dashboard-layout {
+      display: flex;
+      flex: 1;
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      flex: 0 0 300px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .sidebar-card {
+      background: #fefef7;
+      border-radius: 1.5rem;
+      border: 1px solid #e6edea;
+      overflow: hidden;
+      transition: all 0.2s ease;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.02);
+    }
+    .sidebar-card:hover {
+      transform: translateY(-2px);
+      border-color: #cbdcd5;
+      box-shadow: 0 12px 20px -12px rgba(0,0,0,0.1);
+    }
+
+    .sidebar-header {
+      background: #f4e5cf;
+      padding: 1rem 1.2rem;
+      border-bottom: 2px solid #f4b942;
+    }
+    .sidebar-header h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #0b3b2f;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .sidebar-link {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1rem 1.2rem;
+      text-decoration: none;
+      color: #1a2e28;
+      transition: all 0.2s ease;
+      border-bottom: 1px solid #e6edea;
+    }
+    .sidebar-link:last-child { border-bottom: none; }
+    .sidebar-link:hover { background: #fefbf5; padding-left: 1.5rem; }
+
+    .sidebar-icon { font-size: 1.5rem; min-width: 36px; text-align: center; }
+    .sidebar-text { flex: 1; }
+    .sidebar-title { font-weight: 600; font-size: 0.95rem; color: #0b3b2f; }
+    .sidebar-desc  { font-size: 0.7rem; color: #6f8b7e; margin-top: 0.15rem; }
+
+    .arrow-icon { color: #f4b942; opacity: 0; transition: opacity 0.2s; }
+    .sidebar-link:hover .arrow-icon { opacity: 1; }
+
+    /* ── MAIN CONTENT ── */
+    .main-content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-title {
+      font-size: clamp(1.1rem, 4vw, 1.3rem);
+      font-weight: 700;
+      color: #0b3b2f;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 3px solid #f4b942;
+      display: inline-block;
+      width: fit-content;
+    }
+
+    .report-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 0.5rem;
+      flex: 1;
+    }
+
+    .report-card {
+      background: #fefef7;
+      border-radius: 1.5rem;
+      transition: all 0.25s ease-in-out;
+      border: 1px solid #e6edea;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.02);
+      animation: fadeSlideUp 0.35s ease backwards;
+      height: 100%;
+      display: flex;
+    }
+    .report-card:hover {
+      transform: translateY(-6px);
+      border-color: #f4b942;
+      box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
+      background: #ffffff;
+    }
+
+    .report-link {
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      text-decoration: none;
+      color: #1a2e28;
+      height: 100%;
+      width: 100%;
+    }
+
+    .report-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      background: #eef4f1;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 1.5rem;
+      transition: background 0.2s;
+    }
+    .report-card:hover .report-icon { background: #f4e5cf; }
+
+    .report-title {
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      font-weight: 700;
+      color: #0b3b2f;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .report-title .arrow {
+      font-size: 1.2rem;
+      opacity: 0;
+      transform: translateX(-5px);
+      transition: all 0.2s ease;
+      color: #f4b942;
+    }
+    .report-card:hover .report-title .arrow { opacity: 1; transform: translateX(3px); }
+
+    .report-desc {
+      font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+      color: #476b5f;
+      line-height: 1.4;
+    }
+
+    .confidential-note {
+      margin-top: 1.5rem;
+      background: #fef7e8;
+      border-radius: 1rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.75rem;
+      color: #7a681d;
+      border-left: 3px solid #f4b942;
+    }
+
+    /* ── FOOTER ── */
+    .portal-footer {
+      background: #f8fafc;
+      padding: 1.2rem 2rem;
+      text-align: center;
+      border-top: 1px solid #e2e8f0;
+      font-size: 0.8rem;
+      color: #5b6e66;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .badge {
+      background: #eef2e7;
+      padding: 0.2rem 0.8rem;
+      border-radius: 30px;
+      font-weight: 500;
+      font-size: 0.7rem;
+      color: #2c5a4a;
+    }
+
+    .emergency-note { display: inline-flex; align-items: center; gap: 0.4rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .dashboard-layout { gap: 1.2rem; padding: 1.5rem; }
+      .sidebar { flex: 0 0 280px; }
+    }
+
+    @media (max-width: 850px) {
+      .dashboard-layout { flex-direction: column; }
+      .sidebar { flex: auto; width: 100%; }
+      .report-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 0.5rem; }
+      .portal-container { border-radius: 1.2rem; min-height: calc(100vh - 1rem); }
+      .portal-header { padding: 1.2rem 1rem 1.2rem 1rem; }
+      .header-user-bar { position: static; justify-content: center; margin-top: 0.75rem; }
+      .dashboard-layout { padding: 1rem; gap: 1rem; }
+      .sidebar-card { border-radius: 1rem; }
+      .sidebar-link { padding: 0.8rem 1rem; }
+      .report-card { animation: none; }
+      .report-link { padding: 1.2rem; }
+      .portal-footer { flex-direction: column; text-align: center; padding: 1rem; gap: 0.6rem; }
+      .confidential-note { font-size: 0.7rem; }
+    }
+
+    @media (max-width: 480px) {
+      .report-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .sidebar-header h3 { font-size: 0.95rem; }
+      .sidebar-title { font-size: 0.85rem; }
+      .sidebar-desc  { font-size: 0.65rem; }
+    }
+
+    .sidebar-link:focus-visible,
+    .report-link:focus-visible {
+      outline: 3px solid #f4b942;
+      outline-offset: 3px;
+      border-radius: 1rem;
+    }
+
+    hr { display: none; }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .report-card:nth-child(1) { animation-delay: 0.05s; }
+    .report-card:nth-child(2) { animation-delay: 0.1s;  }
+    .report-card:nth-child(3) { animation-delay: 0.15s; }
+  </style>
+</head>
+<body>
+
+<div class="portal-container">
+  <div class="portal-header">
+    <h1>Bantay Barangay Portal</h1>
+    <div class="tagline">Citizen Services &amp; Reporting · Integrity &amp; Transparency</div>
+
+    <!-- User greeting + Logout -->
+    <div class="header-user-bar">
+      <span class="header-greeting">👤 Welcome!, <?= $username ?></span>
+      <a href="logout.php" class="btn-logout">🚪 Logout</a>
+    </div>
+  </div>
+  <div class="elegant-divider"></div>
+
+  <div class="dashboard-layout">
+
+    <aside class="sidebar">
+
+      <!-- Account & Profile Card -->
+      <div class="sidebar-card">
+        <div class="sidebar-header">
+          <h3>📌 Account &amp; Profile</h3>
+        </div>
+        <a href="update-personal-info.php" class="sidebar-link">
+          <div class="sidebar-icon">📝</div>
+          <div class="sidebar-text">
+            <div class="sidebar-title">Update Personal Info</div>
+            <div class="sidebar-desc">Edit name, address, contact details</div>
+          </div>
+          <span class="arrow-icon">→</span>
+        </a>
+        <a href="my_reports.html" class="sidebar-link">
+          <div class="sidebar-icon">📋</div>
+          <div class="sidebar-text">
+            <div class="sidebar-title">Report History (Status)</div>
+            <div class="sidebar-desc">View and track your previously submitted reports.</div>
+          </div>
+          <span class="arrow-icon">→</span>
+        </a>
+      </div>
+
+      <!-- Barangay Info Card -->
+      <div class="sidebar-card">
+        <div class="sidebar-header">
+          <h3>📢 Barangay Info</h3>
+        </div>
+        <div style="padding: 1rem 1.2rem;">
+          <p style="font-size:0.8rem;color:#476b5f;margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem;">
+            <span>📍</span> Barangay Hall: Monday–Friday, 8AM–5PM
+          </p>
+          <p style="font-size:0.8rem;color:#476b5f;margin-bottom:0.75rem;display:flex;align-items:center;gap:0.5rem;">
+            <span>🚨</span> Emergency hotline: 911
+          </p>
+          <p style="font-size:0.8rem;color:#476b5f;display:flex;align-items:center;gap:0.5rem;">
+            <span>📧</span> barangay@bantay.gov.ph
+          </p>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- MAIN: 3 Report Cards -->
+    <main class="main-content">
+      <div class="section-title">📢 Submit a Report</div>
+      <div class="report-grid">
+
+        <div class="report-card">
+          <a href="report-barangay-issue.html" class="report-link">
+            <div class="report-icon">⚠️</div>
+            <div class="report-title">
+              Barangay Issue
+              <span class="arrow">→</span>
+            </div>
+            <div class="report-desc">
+              Report problems like broken roads, flooding, or cleanliness.
+            </div>
+          </a>
+        </div>
+
+        <div class="report-card">
+          <a href="report-officials.html" class="report-link">
+            <div class="report-icon">⚖️</div>
+            <div class="report-title">
+              Report Officials
+              <span class="arrow">→</span>
+            </div>
+            <div class="report-desc">
+              File a confidential complaint against a barangay official.
+            </div>
+          </a>
+        </div>
+
+        <div class="report-card">
+          <a href="report-kapitbahay.html" class="report-link">
+            <div class="report-icon">🏘️</div>
+            <div class="report-title">
+              Report Kapitbahay
+              <span class="arrow">→</span>
+            </div>
+            <div class="report-desc">
+              Report neighbor disputes, disturbances, or safety concerns.
+            </div>
+          </a>
+        </div>
+
+      </div>
+
+      <div class="confidential-note">
+        🔒 All reports are handled with utmost confidentiality. Your privacy is our priority. Reports are encrypted and securely stored.
+      </div>
+    </main>
+
+  </div>
+
+  <div class="portal-footer">
+    <div class="emergency-note">
+      <span>📞 Barangay Hotline: (02) 1234 5678</span>
+    </div>
+    <div class="badge">🔒 Confidential Reporting · Data Privacy Compliant</div>
+    <div>🕊️ Serbisyong Tapat, Barangay Sambayan</div>
+  </div>
+</div>
+
+</body>
+</html>

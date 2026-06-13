@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bantay Barangay | My Report History</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: linear-gradient(145deg, #eef2f7 0%, #d9e2ec 100%);
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', system-ui, sans-serif;
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── HEADER ── */
+    .page-header {
+      background: #020353;
+      border-radius: 1.5rem;
+      padding: 1.5rem 2rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 5px solid #f4b942;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .header-left { display: flex; align-items: center; gap: 1rem; }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #f9f3e2;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      background: rgba(0,0,0,0.25);
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      transition: all 0.2s ease;
+    }
+
+    .back-link:hover {
+      background: rgba(0,0,0,0.4);
+      color: white;
+    }
+
+    .page-title {
+      color: white;
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .page-subtitle {
+      color: #f9f3e2;
+      font-size: 0.85rem;
+      margin-top: 0.2rem;
+      opacity: 0.8;
+    }
+
+    .total-badge {
+      background: #f4b942;
+      color: #3a2200;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+    }
+
+    /* ── STATS ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 1rem;
+      padding: 1rem 1.25rem;
+      border-top: 3px solid #f4b942;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 0.72rem;
+      color: #5a7a6e;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 6px;
+    }
+
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #0b3b2f;
+    }
+
+    /* ── FILTER ── */
+    .filter-bar {
+      background: white;
+      border-radius: 1rem;
+      padding: 1rem 1.25rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .filter-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #4a6358;
+    }
+
+    .filter-btn {
+      background: #f0f4f2;
+      border: 1.5px solid transparent;
+      color: #4a6358;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      border-radius: 2rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+
+    .filter-btn:hover { background: #e0ece6; }
+    .filter-btn.active {
+      background: #0b3b2f;
+      color: white;
+      border-color: #0b3b2f;
+    }
+
+    /* ── REPORT CARDS ── */
+    .reports-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .report-card {
+      background: white;
+      border-radius: 1.2rem;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      border-left: 4px solid #f4b942;
+      transition: all 0.2s ease;
+      animation: fadeSlideUp 0.3s ease-out;
+    }
+
+    .report-card:hover {
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+    }
+
+    .report-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .report-type-badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.75rem;
+      border-radius: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .type-kapitbahay  { background: #e8f4fd; color: #0d4b8a; }
+    .type-official    { background: #f3e8ff; color: #5b21b6; }
+    .type-barangay    { background: #e1f7e9; color: #145c35; }
+
+    /* ── STATUS BADGE — read-only display, hindi na select ── */
+    .status-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.3rem 0.9rem;
+      border-radius: 2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      flex-shrink: 0;
+      user-select: none;
+    }
+
+    .status-pending    { background: #fff3e0; color: #804d00; }
+    .status-progress   { background: #e3f0fc; color: #0d4b8a; }
+    .status-review     { background: #f3e8ff; color: #5b21b6; }
+    .status-resolved   { background: #e1f7e9; color: #145c35; }
+
+    .report-description {
+      font-size: 0.85rem;
+      color: #2c4a40;
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .report-meta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.75rem;
+      color: #7a9e8e;
+      font-weight: 500;
+    }
+
+    .priority-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .priority-low      { background: #22c55e; }
+    .priority-normal   { background: #3b82f6; }
+    .priority-medium   { background: #f59e0b; }
+    .priority-high     { background: #f97316; }
+    .priority-critical { background: #ef4444; }
+    .priority-urgent   { background: #ef4444; }
+
+    /* ── ADMIN NOTE ── */
+    .admin-note {
+      font-size: 0.72rem;
+      color: #7a9e8e;
+      margin-top: 0.5rem;
+      font-style: italic;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #8da396;
+      background: white;
+      border-radius: 1.2rem;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    }
+
+    .empty-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+    .empty-text { font-size: 0.9rem; font-weight: 500; }
+    .empty-sub  { font-size: 0.78rem; margin-top: 0.5rem; }
+
+    .loading-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: #8da396;
+      font-size: 0.9rem;
+    }
+
+    .footer {
+      text-align: center;
+      color: #8da396;
+      font-size: 0.72rem;
+      margin-top: 2rem;
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 1rem; }
+      .page-header { padding: 1.25rem; }
+      .page-title { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-left">
+      <a href="homepage.php" class="back-link">← Bumalik</a>
+      <div>
+        <div class="page-title">📋 My Report History</div>
+        <div class="page-subtitle">Lahat ng iyong mga naisubmit na ulat</div>
+      </div>
+    </div>
+    <div class="total-badge" id="totalBadge">Loading...</div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-label">⏳ Pending</div>
+      <div class="stat-num" id="statPending">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">🔄 In Progress</div>
+      <div class="stat-num" id="statProgress">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">🔍 Under Review</div>
+      <div class="stat-num" id="statReview">0</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">✅ Resolved</div>
+      <div class="stat-num" id="statResolved">0</div>
+    </div>
+  </div>
+
+  <!-- Filter -->
+  <div class="filter-bar">
+    <span class="filter-label">Filter:</span>
+    <button class="filter-btn active" onclick="filterReports('all', this)">All</button>
+    <button class="filter-btn" onclick="filterReports('Kapitbahay', this)">Kapitbahay</button>
+    <button class="filter-btn" onclick="filterReports('Official', this)">Official</button>
+    <button class="filter-btn" onclick="filterReports('Barangay Issue', this)">Barangay Issue</button>
+    <button class="filter-btn" onclick="filterReports('Pending', this)">⏳ Pending</button>
+    <button class="filter-btn" onclick="filterReports('Resolved', this)">✅ Resolved</button>
+  </div>
+
+  <!-- Reports List -->
+  <div class="reports-list" id="reportsList">
+    <div class="loading-state">Loading your reports...</div>
+  </div>
+
+  <div class="footer">🕊️ Bantay Barangay | Serbisyong Tapat, Barangay Sambayan</div>
+</div>
+
+<script>
+  let allReports = [];
+
+  const typeClass = {
+    'Kapitbahay':    'type-kapitbahay',
+    'Official':      'type-official',
+    'Barangay Issue':'type-barangay'
+  };
+
+  // Status display — icon + label lang, hindi na editable ng user
+  const statusMeta = {
+    'Pending':      { cls: 'status-pending',  icon: '⏳' },
+    'In Progress':  { cls: 'status-progress', icon: '🔄' },
+    'Under Review': { cls: 'status-review',   icon: '🔍' },
+    'Resolved':     { cls: 'status-resolved', icon: '✅' }
+  };
+
+  const priorityClass = {
+    'Low':      'priority-low',
+    'Normal':   'priority-normal',
+    'Medium':   'priority-medium',
+    'High':     'priority-high',
+    'Critical': 'priority-critical',
+    'Urgent':   'priority-urgent'
+  };
+
+  function updateStats(reports) {
+    document.getElementById('statPending').textContent  = reports.filter(r => r.status === 'Pending').length;
+    document.getElementById('statProgress').textContent = reports.filter(r => r.status === 'In Progress').length;
+    document.getElementById('statReview').textContent   = reports.filter(r => r.status === 'Under Review').length;
+    document.getElementById('statResolved').textContent = reports.filter(r => r.status === 'Resolved').length;
+    document.getElementById('totalBadge').textContent   = reports.length + ' Total Reports';
+  }
+
+  function renderReports(reports) {
+    const el = document.getElementById('reportsList');
+
+    if (!reports.length) {
+      el.innerHTML = `
+        <div class="empty-state">
+          <span class="empty-icon">📭</span>
+          <div class="empty-text">Walang report na natagpuan.</div>
+          <div class="empty-sub">Wala kang naisubmit na ulat sa kategoryang ito.</div>
+        </div>`;
+      return;
+    }
+
+    el.innerHTML = reports.map(r => {
+      const typeCls     = typeClass[r.report_type]  || 'type-barangay';
+      const sm          = statusMeta[r.status]       || statusMeta['Pending'];
+      const priorityCls = priorityClass[r.priority]  || 'priority-normal';
+      const date        = new Date(r.created_at).toLocaleDateString('en-PH', {
+        year: 'numeric', month: 'long', day: 'numeric',
+        hour: '2-digit', minute: '2-digit'
+      });
+
+      return `
+        <div class="report-card">
+          <div class="report-card-top">
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
+              <span class="report-type-badge ${typeCls}">${r.report_type}</span>
+            </div>
+            <!-- READ-ONLY: hindi na select, badge lang -->
+            <span class="status-badge ${sm.cls}">${sm.icon} ${r.status}</span>
+          </div>
+          <div class="report-description">${r.description}</div>
+          <div class="report-meta">
+            <span class="meta-item">
+              <span class="priority-dot ${priorityCls}"></span>
+              ${r.priority} Priority
+            </span>
+            <span class="meta-item">📅 ${date}</span>
+          </div>
+          <div class="admin-note">🛡️ Status ay ina-update ng admin lamang.</div>
+        </div>`;
+    }).join('');
+  }
+
+  function filterReports(filter, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    if (filter === 'all') {
+      renderReports(allReports);
+      return;
+    }
+
+    const filtered = allReports.filter(r =>
+      r.report_type === filter || r.status === filter
+    );
+    renderReports(filtered);
+  }
+
+  // Load reports on page load
+  fetch('get_my_reports.php')
+    .then(r => r.json())
+    .then(data => {
+      if (!data.success) {
+        if (data.message === 'Not logged in.') {
+          window.location.href = 'index.html';
+          return;
+        }
+        document.getElementById('reportsList').innerHTML =
+          '<div class="empty-state"><span class="empty-icon">⚠️</span><div class="empty-text">Failed to load reports.</div></div>';
+        return;
+      }
+
+      allReports = data.reports;
+      updateStats(allReports);
+      renderReports(allReports);
+    })
+    .catch(() => {
+      document.getElementById('reportsList').innerHTML =
+        '<div class="empty-state"><span class="empty-icon">⚠️</span><div class="empty-text">Server error. Please try again.</div></div>';
+    });
+</script>
+</body>
+</html>
