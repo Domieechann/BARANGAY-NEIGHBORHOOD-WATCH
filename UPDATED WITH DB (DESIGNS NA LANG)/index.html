@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Bantay Barangay | Official Welcome Portal</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:'Segoe UI', Roboto, 'Helvetica Neue', system-ui, -apple-system, sans-serif;
+    line-height:1.5;
+    height:100vh;
+    width:100vw;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    position:relative;
+}
+
+.bg-container{
+    position:absolute;
+    inset:0;
+    z-index:-2;
+}
+
+.bg-container img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.bg-tint{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        135deg,
+        rgba(2,3,83,.90) 0%,
+        rgba(12,68,124,.85) 100%
+    );
+    z-index:-1;
+}
+
+.gov-bar{
+    background:#0b1120;
+    color:#f8fafc;
+    font-size:.75rem;
+    padding:.5rem 2rem;
+    font-weight:600;
+    letter-spacing:.5px;
+    border-bottom:1px solid rgba(255,255,255,.15);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.gov-identity{
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+}
+
+.main-header{
+    background:#fff;
+    padding:1rem 2rem;
+    border-bottom:4px solid #f4b942;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 4px 20px rgba(0,0,0,.2);
+}
+
+.brand-section{
+    display:flex;
+    align-items:center;
+    gap:1.25rem;
+}
+
+.logo-badge{
+    width:50px;
+    height:50px;
+    background:#020353;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.5rem;
+    border:2px solid #f4b942;
+}
+
+.title-block h1{
+    color:#020353;
+    font-size:1.4rem;
+    font-weight:800;
+}
+
+.title-block p{
+    color:#64748b;
+    font-size:.75rem;
+    font-weight:600;
+    text-transform:uppercase;
+}
+
+.admin-header-btn{
+    display:flex;
+    align-items:center;
+    gap:.5rem;
+    background:#dc2626;
+    color:#fff;
+    border:1.5px solid #dc2626;
+    padding:.6rem 1.2rem;
+    border-radius:.5rem;
+    text-decoration:none;
+    font-weight:700;
+}
+
+.admin-header-btn:hover{
+    background:#b91c1c;
+}
+
+.portal-workspace{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:2rem;
+    text-align:center;
+}
+
+.hero-announcement{
+    margin-bottom:2rem;
+    max-width:700px;
+}
+
+.hero-announcement h2{
+    color:#fff;
+    font-size:2.2rem;
+    font-weight:800;
+}
+
+.hero-announcement p{
+    color:#cbd5e1;
+    font-size:1.1rem;
+}
+
+.services-grid{
+    width:100%;
+    max-width:700px;
+}
+
+.service-card-anchor{
+    width:100%;
+    background:#fff;
+    border-radius:1rem;
+    box-shadow:0 20px 40px rgba(0,0,0,.35);
+    padding:2rem;
+    display:flex;
+    gap:1.5rem;
+    align-items:flex-start;
+    border:2px solid #b5d4f4;
+    border-top:6px solid #0c447c;
+}
+
+.service-card-anchor:hover{
+    border-color:#0c447c;
+    box-shadow:0 30px 50px rgba(0,0,0,.5);
+}
+
+.icon-container{
+    font-size:2.5rem;
+    background:#f1f5f9;
+    color:#0c447c;
+    width:64px;
+    height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:.5rem;
+}
+
+.text-container{
+    flex:1;
+}
+
+.card-title{
+    font-size:1.3rem;
+    font-weight:700;
+    color:#01023a;
+}
+
+.card-title .tl{
+    display:block;
+    font-size:.75em;
+    font-style:italic;
+    color:#1e7b48;
+}
+
+.card-desc{
+    font-size:.88rem;
+    color:#475569;
+    margin-top:.5rem;
+}
+
+.portal-buttons{
+    margin-top:1.5rem;
+    display:flex;
+    align-items:center;
+    gap:1rem;
+}
+
+.login-btn,
+.register-btn{
+    flex:1;
+    text-align:center;
+    text-decoration:none;
+    padding:.9rem;
+    border-radius:.6rem;
+    font-weight:700;
+    transition:.3s;
+}
+
+.login-btn{
+    background:#fff;
+    border:2px solid #2563eb;
+    color:#2563eb;
+}
+
+.login-btn:hover{
+    background:#2563eb;
+    color:#fff;
+}
+
+.register-btn{
+    background:#2563eb;
+    border:2px solid #2563eb;
+    color:#fff;
+}
+
+.register-btn:hover{
+    background:#1d4ed8;
+}
+
+.divider-text{
+    font-weight:700;
+    color:#64748b;
+}
+
+.gov-footer{
+    background:#01023a;
+    color:#94a3b8;
+    font-size:.8rem;
+    padding:1rem 2rem;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.security-badge{
+    background:rgba(255,255,255,.1);
+    color:#f4b942;
+    padding:.2rem .6rem;
+    border-radius:4px;
+}
+
+.footer-left{
+    display:flex;
+    gap:1rem;
+    align-items:center;
+}
+
+/* ── TOAST NOTIFICATION ─────────────────────────────────────── */
+.toast{
+    position:fixed;
+    top:1.5rem;
+    right:1.5rem;
+    z-index:9999;
+    min-width:320px;
+    max-width:400px;
+    background:#fff;
+    border-radius:.75rem;
+    box-shadow:0 10px 40px rgba(0,0,0,.25);
+    border-left:6px solid #16a34a;
+    padding:1rem 1.25rem;
+    display:flex;
+    align-items:flex-start;
+    gap:.85rem;
+
+    /* hidden by default */
+    opacity:0;
+    transform:translateX(120%);
+    transition:opacity .4s ease, transform .4s cubic-bezier(.22,1,.36,1);
+    pointer-events:none;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translateX(0);
+    pointer-events:auto;
+}
+
+.toast.hide{
+    opacity:0;
+    transform:translateX(120%);
+}
+
+.toast-icon{
+    font-size:1.6rem;
+    line-height:1;
+    flex-shrink:0;
+}
+
+.toast-body{
+    flex:1;
+}
+
+.toast-title{
+    font-weight:800;
+    color:#15803d;
+    font-size:.95rem;
+}
+
+.toast-msg{
+    font-size:.82rem;
+    color:#475569;
+    margin-top:.2rem;
+    line-height:1.4;
+}
+
+.toast-close{
+    background:none;
+    border:none;
+    cursor:pointer;
+    color:#94a3b8;
+    font-size:1.1rem;
+    line-height:1;
+    padding:0;
+    flex-shrink:0;
+    align-self:flex-start;
+}
+
+.toast-close:hover{
+    color:#475569;
+}
+
+/* progress bar */
+.toast-progress{
+    position:absolute;
+    bottom:0;
+    left:0;
+    height:4px;
+    background:#16a34a;
+    border-radius:0 0 0 .75rem;
+    width:100%;
+    transform-origin:left;
+    animation:toast-shrink 5s linear forwards;
+}
+
+@keyframes toast-shrink{
+    from{ transform:scaleX(1); }
+    to  { transform:scaleX(0); }
+}
+
+@media(max-width:640px){
+
+    body{
+        overflow-y:auto;
+    }
+
+    .main-header{
+        flex-direction:column;
+        gap:1rem;
+        text-align:center;
+    }
+
+    .service-card-anchor{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .portal-buttons{
+        flex-direction:column;
+    }
+
+    .divider-text{
+        display:none;
+    }
+
+    .login-btn,
+    .register-btn{
+        width:100%;
+    }
+
+    .toast{
+        min-width:unset;
+        left:1rem;
+        right:1rem;
+        top:1rem;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ── TOAST ──────────────────────────────────────────────────── -->
+<div class="toast" id="regToast" role="alert" aria-live="polite">
+    <div class="toast-icon">✅</div>
+    <div class="toast-body">
+        <div class="toast-title">Account Successfully Created!</div>
+        <div class="toast-msg">
+            Your registration has been submitted.<br>
+            Please wait a few hours for admin verification before logging in.
+        </div>
+    </div>
+    <button class="toast-close" onclick="hideToast()" aria-label="Close">✕</button>
+    <div class="toast-progress" id="toastProgress"></div>
+</div>
+
+<div class="bg-container">
+    <div class="bg-tint"></div>
+    <img src="https://thumbs.dreamstime.com/b/barangay-east-rembo-makati-city-aerial-view-276301378.jpg" alt="">
+</div>
+
+<div class="gov-bar">
+    <div class="gov-identity">
+        <span>REPUBLIC OF THE PHILIPPINES</span>
+        <span>|</span>
+        <span style="color:#94a3b8;">OFFICIAL BARANGAY PORTAL</span>
+    </div>
+
+    <div>STRICT SECURE ACCESS PROTOCOL</div>
+</div>
+
+<header class="main-header">
+
+    <div class="brand-section">
+
+        <div class="logo-badge">
+            🛡️
+        </div>
+
+        <div class="title-block">
+            <h1>Bantay Barangay Portal</h1>
+            <p>Public Local Infrastructure Gate</p>
+        </div>
+
+    </div>
+
+    <a href="admin-login.html" class="admin-header-btn">
+         Administrative Portal
+    </a>
+
+</header>
+
+<main class="portal-workspace">
+
+    <div class="hero-announcement">
+        <h2>Official Citizen Gateway</h2>
+        <p>
+            Secure operations clearing house for public filing records,
+            neighborhood incident management logs, and localized tracking updates.
+        </p>
+    </div>
+
+    <div class="services-grid">
+
+        <div class="service-card-anchor">
+
+            <div class="text-container">
+
+                <div class="card-title">
+                    Citizen Services Portal
+                    <span class="tl">Portal ng Mamamayan</span>
+                </div>
+
+                <div class="card-desc">
+                    File confidential grievance records, report systemic local issues,
+                    and query workflow tracking history.
+                </div>
+
+                <div class="portal-buttons">
+
+                    <a href="login.html" class="login-btn">
+                        👤 Log In
+                    </a>
+
+                    <span class="divider-text">or</span>
+
+                    <a href="registration.html" class="register-btn">
+                        👥 Register
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<footer class="gov-footer">
+
+    <div class="footer-left">
+        <span> Serbisyong Tapat, Barangay Sambayan</span>
+        <span class="security-badge">Data Privacy Compliant</span>
+    </div>
+
+    <div>
+        &copy; 2026 Bantay Barangay. All Rights Reserved.
+    </div>
+
+</footer>
+
+<script>
+    // ── Auto-dismiss timer (ms) ──────────────────────────────────
+    const TOAST_DURATION = 5000;
+    let toastTimer = null;
+
+    function showToast() {
+        const toast = document.getElementById('regToast');
+
+        // Reset animation kung pina-show ulit
+        const bar = document.getElementById('toastProgress');
+        bar.style.animation = 'none';
+        bar.offsetHeight; // reflow trick para ma-restart ang animation
+        bar.style.animation = '';
+
+        toast.classList.remove('hide');
+        toast.classList.add('show');
+
+        // Auto-hide after duration
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(hideToast, TOAST_DURATION);
+    }
+
+    function hideToast() {
+        const toast = document.getElementById('regToast');
+        toast.classList.add('hide');
+        setTimeout(() => toast.classList.remove('show', 'hide'), 400);
+        clearTimeout(toastTimer);
+
+        // Linisin ang URL para hindi mag-show ulit sa refresh
+        const url = new URL(window.location.href);
+        url.searchParams.delete('registered');
+        history.replaceState(null, '', url.toString());
+    }
+
+    // ── Check URL parameter on page load ────────────────────────
+    window.addEventListener('DOMContentLoaded', () => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('registered') === '1') {
+            showToast();
+        }
+    });
+</script>
+
+</body>
+</html>
